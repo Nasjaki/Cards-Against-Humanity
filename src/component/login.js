@@ -9,6 +9,7 @@ async function newPlayerHandle() {
 }
 
 async function debugPlayers() {
+    //aa
     let re = await get_players();    
     console.log(re.players);
 }
