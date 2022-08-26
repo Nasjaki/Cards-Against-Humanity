@@ -11,15 +11,20 @@ import get_black_card from '../code/get_black_card';
 import get_white_cards from '../code/get_white_cards';
 import get_czar from '../code/get_czar';
 
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 let black_card = "";
 let card_count = 10;
 let white_card = [];
+let selected = [];
+let selected_allowed = 0;
 for(var i = 0; i < card_count; i++) {
     white_card[i] = "";
+    selected[i] = false;
 }
+
 
 async function gameActiveHandle() {
     return await game_active();
@@ -57,12 +62,16 @@ export default function Game (){
                 //Game Loop as czar or as player
                 if (await get_czar() === "Czar") {
                     setIsCzar("Czar");
+                    
 
                 } else {
                     setIsCzar("Player");
 
+                    //set white cards array
                     white_card = await get_white_cards();
-                    setShowCount(10);
+                    //get how many cards can be selected
+                    selected_allowed = await get_black_card();
+                    selected_allowed = selected_allowed.pick;
                 }
 
             } else {
@@ -78,9 +87,6 @@ export default function Game (){
           }, 2000);
     });
 
-    //wie viele weiße Karten gezeigt werden
-    const [showCount, setShowCount] = useState(-1);
-
     let navigate = useNavigate();
     async function leaveGameHandle() {
         let left = await game_leave();
@@ -90,6 +96,24 @@ export default function Game (){
         } 
     }
 
+    //Cards selected
+    function toggleSelected(card) {
+        let selected_count = 0;
+        for(var i = 0; i < selected.length; i++) {
+            if (selected[i] === true) selected_count++;
+        }
+
+        if (selected[card] === false && selected_count >= selected_allowed) {
+            
+        } else {
+            selected[card] = !(selected[card]);
+        }
+    }
+    function selectedHandle(card) {
+        return selected[card];
+    }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     return <div>
         <h1>Game {game_active}</h1>
         <h2>{window.game_id}</h2>
@@ -103,21 +127,26 @@ export default function Game (){
 
         <div className='Cards'>
             <div className='Black-Card'>
-                <input id = "black_card" placeholder= {black_card}></input>
+                <input id = "black_card" placeholder= {black_card.text}></input>
             </div>
 
-            <div className='White-Card'>
-                {showCount > 0 ? <button id = "white_card0" >{white_card[0].text}</button> : null}
-                {showCount > 1 ? <button id = "white_card1" >{white_card[1].text}</button> : null}
-                {showCount > 2 ? <button id = "white_card2" >{white_card[2].text}</button> : null}
-                {showCount > 3 ? <button id = "white_card3" >{white_card[3].text}</button> : null}
-                {showCount > 4 ? <button id = "white_card4" >{white_card[4].text}</button> : null}
-                {showCount > 5 ? <button id = "white_card5" >{white_card[5].text}</button> : null}
-                {showCount > 6 ? <button id = "white_card3" >{white_card[6].text}</button> : null}
-                {showCount > 7 ? <button id = "white_card4" >{white_card[7].text}</button> : null}
-                {showCount > 8 ? <button id = "white_card5" >{white_card[8].text}</button> : null}
-                {showCount > 9 ? <button id = "white_card5" >{white_card[9].text}</button> : null}
-            </div>
+            {isCzar === "Player" ? <div className='Player-Board'>
+                <div className='White-Card'>
+                    <button id = {selectedHandle(0) ? "card_selected" : "card_default"} onClick = {() => toggleSelected(0)}>{white_card[0].text}</button>
+                    <button id = {selectedHandle(1) ? "card_selected" : "card_default"} onClick = {() => toggleSelected(1)}>{white_card[1].text}</button>
+                    <button id = {selectedHandle(2) ? "card_selected" : "card_default"} onClick = {() => toggleSelected(2)}>{white_card[2].text}</button>
+                    <button id = {selectedHandle(3) ? "card_selected" : "card_default"} onClick = {() => toggleSelected(3)}>{white_card[3].text}</button>
+                    <button id = {selectedHandle(4) ? "card_selected" : "card_default"} onClick = {() => toggleSelected(4)}>{white_card[4].text}</button>
+                    <button id = {selectedHandle(5) ? "card_selected" : "card_default"} onClick = {() => toggleSelected(5)}>{white_card[5].text}</button>
+                    <button id = {selectedHandle(6) ? "card_selected" : "card_default"} onClick = {() => toggleSelected(6)}>{white_card[6].text}</button>
+                    <button id = {selectedHandle(7) ? "card_selected" : "card_default"} onClick = {() => toggleSelected(7)}>{white_card[7].text}</button>
+                    <button id = {selectedHandle(8) ? "card_selected" : "card_default"} onClick = {() => toggleSelected(8)}>{white_card[8].text}</button>
+                    <button id = {selectedHandle(9) ? "card_selected" : "card_default"} onClick = {() => toggleSelected(9)}>{white_card[9].text}</button>
+                </div> 
+                <button id = "Commit-Answer-Button"> Commit Answer </button>
+            </div> : null}
+
+            
         </div>
         
     </div>
@@ -125,5 +154,4 @@ export default function Game (){
 
 //<button id = "Black-Card-Button" onClick={newBlackCardHandle}> New Black Card </button>
 
-//<button id = "White-Card-Button" onClick={newWhiteCardHandle}> New White Card </button>
 

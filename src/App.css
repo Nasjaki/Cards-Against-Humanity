@@ -27,7 +27,24 @@
 .Black-Card {
   color:black;
   background-color: black;
+  padding: 10px;
+}
+#black_card {
+  width: 500px;
 }
 .White-Card {
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+#Commit-Answer-Button {
+  margin-top: 30px;
+}
+
+#card_default {
+  color: black;
+}
+#card_selected {
+  color: green;
 }

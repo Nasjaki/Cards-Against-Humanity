@@ -10,9 +10,9 @@ export default async function get_black_card(game_id = window.game_id) {
             }
         });
         let json = await response.json();
-        let text = json.currentBlackCard.text;
+        let card = json.currentBlackCard;
 
-        return text;
+        return card;
     } catch (ex) {
         console.error(ex);
         return false;
