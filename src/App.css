@@ -19,3 +19,15 @@
   height: 100px;
 
 }
+
+.Cards {
+  margin-top: 20px;
+  
+}
+.Black-Card {
+  color:black;
+  background-color: black;
+}
+.White-Card {
+  margin-top: 20px;
+}

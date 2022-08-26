@@ -22,7 +22,7 @@ export default function Play (){
 
    async function createGameHandle() {
       let running = await create_game(window.player_id);
-      console.log(running);
+
       if (running) {
          navigate("/game");
       } else {

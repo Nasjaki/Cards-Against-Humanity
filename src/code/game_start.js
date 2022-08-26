@@ -1,7 +1,7 @@
 
 const url = "https://gruppe5.toni-barth.com/";
 
-export default async function game_leave(game_id = window.game_id, player_id = window.player_id) {
+export default async function game_start(game_id = window.game_id, player_id = window.player_id) {
     
     try {
 
@@ -11,13 +11,13 @@ export default async function game_leave(game_id = window.game_id, player_id = w
                 'Content-Type':'application/json',
             },
             body: JSON.stringify({
-                "action" : "leave"
+                "action" : "start"
             })
         });
 
 
-        console.log("player: " + player_id + " left the game: " + game_id);
-        window.game_id = -1;
+        console.log("player: " + player_id + " started the game: " + game_id);
+        
         return true;
     } catch (ex) {
         console.error(ex);

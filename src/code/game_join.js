@@ -22,6 +22,7 @@ export default async function game_join(game_id, player_id = window.player_id) {
 
         if (game_id !== undefined) {
             console.log("player: " + player_id + "joined the game: " + game_id);
+            window.game_id = game_id;
             
             return "Game";
         } else {
