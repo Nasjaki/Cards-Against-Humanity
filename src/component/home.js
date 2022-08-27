@@ -7,7 +7,7 @@ export default function Home (){
         <h1>Welcome to Cards Against Humanity!</h1>
 
         <div className='Login-Buttons'>
-                <button id = "Create-User-Button" onClick={0}> Test </button>
+
                 
         </div>
     </div>

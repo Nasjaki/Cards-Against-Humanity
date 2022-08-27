@@ -10,10 +10,12 @@ import game_active from '../code/game_active';
 import get_black_card from '../code/get_black_card';
 import get_white_cards from '../code/get_white_cards';
 import get_czar from '../code/get_czar';
+import get_players_lobby from '../code/get_players_lobby'
 
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 
 let black_card = "";
 let card_count = 10;
@@ -43,14 +45,48 @@ export default function Game (){
         }
     }
     //is Czar
-    const [isCzar, setIsCzar] = useState("Player");
+    const [isCzar, setIsCzar] = useState("");
 
-    //step
+    //Load new Players
+    const[player_list, set_player_list] = useState([]);
+    const add_list_element = (new_player) => {
+        set_player_list(existing_players => {
+            return [new_player, ...existing_players];
+        })
+    }
+    const delete_list_element_end = () => {
+        set_player_list(existing_players => {
+            return existing_players.slice(0, existing_players.length-1);
+        })
+    }
+    const set_list_element = (index, new_element) => {
+        set_player_list(existing_players => {
+            return [
+                ...existing_players.slice(0,index),
+                existing_players[index] = new_element,
+                ...existing_players.slice(index + 1)
+            ]
+        })
+    }
+
+    async function refresh_player_list() {
+        const player_arr = await get_players_lobby();
+
+        if (player_arr.length !== player_list.length) {
+
+            for(var i = 0; i < player_arr.length; i++) {
+                set_list_element(i, player_arr[i].name + " " + player_arr[i].id);
+            }
+            if (player_arr.length < player_list.length) delete_list_element_end(); 
+        }
+
+    }
+
+///////////////////////////////////////////////////step//////////////////////////////////////////
     const [count, setCount] = useState(0);
     useEffect(() => {
         setTimeout(async () => {
             setCount((count) => count + 1);
-            
 
             //only in game active possible
             if (await gameActiveHandle()) {
@@ -80,8 +116,13 @@ export default function Game (){
 
                 black_card = "";
                 setIsCzar("");
+
+
+                //all 4 secs
+                if (count % 2 == 0) await refresh_player_list();
+
             }
-            
+
 
 
           }, 2000);
@@ -145,9 +186,19 @@ export default function Game (){
                 </div> 
                 <button id = "Commit-Answer-Button"> Commit Answer </button>
             </div> : null}
-
-            
         </div>
+
+        <ul className='Player-Table'>
+            {player_list.map((player_name, index) => {
+                return (
+                    <li key = {index}>
+                        <span>{player_name}</span>
+                        {/*<button id = "test"> Kick </button>*/}
+                    </li>
+                )
+            })}
+        </ul>
+        
         
     </div>
 }

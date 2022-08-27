@@ -7,13 +7,13 @@ import game_join from '../code/game_join';
 
 import { useNavigate } from "react-router-dom";
 
-
  
 async function debugGamesHandle() {
    let gameInfo = await get_games();
    console.log(gameInfo);
 }
 async function deleteGameHandle() {
+
    await delete_game();
 }
 
@@ -30,7 +30,7 @@ export default function Play (){
       }
    } 
    async function joinGameHandle() {
-      let joined = await game_join(document.getElementById("Join-Game-Input").value, window.player_id);
+      let joined = await game_join(document.getElementById("Join-Game-Input").value);
 
       switch(joined) {
          case("Game"):
@@ -40,7 +40,7 @@ export default function Play (){
             navigate("/login");
          break;
          case("Error"):
-            console.log("Error");
+            console.log("Game already started");
          break;
       }
    } 

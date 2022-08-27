@@ -16,7 +16,7 @@ export default async function game_start(game_id = window.game_id, player_id = w
         });
 
 
-        console.log("player: " + player_id + " started the game: " + game_id);
+        console.log("player: " + player_id + " stopped the game: " + game_id);
         
         return true;
     } catch (ex) {
