@@ -48,3 +48,17 @@
 #card_selected {
   color: green;
 }
+
+#Answer_Selected {
+  background-color: green;
+}
+#Answer_Default {
+  background-color: gray;
+}
+
+#Card_Selected {
+  background-color: green;
+}
+#Card_Default {
+  background-color: gray;
+}

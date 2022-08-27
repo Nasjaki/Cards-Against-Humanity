@@ -11,26 +11,32 @@ import get_black_card from '../code/get_black_card';
 import get_white_cards from '../code/get_white_cards';
 import get_czar from '../code/get_czar';
 import get_players_lobby from '../code/get_players_lobby'
+import commit_answer from '../code/commit_answer';
+import get_answers from '../code/get_answers';
+import put_winner from '../code/put_winner';
 
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 
+
 let black_card = "";
 let card_count = 10;
 let white_card = [];
-let selected = [];
-let selected_allowed = 0;
 for(var i = 0; i < card_count; i++) {
     white_card[i] = "";
-    selected[i] = false;
+
 }
 
+let card_selected = [];
+let selected_allowed = 0;
 
 async function gameActiveHandle() {
     return await game_active();
 }
+
+
 
 
 export default function Game (){
@@ -49,11 +55,7 @@ export default function Game (){
 
     //Load new Players
     const[player_list, set_player_list] = useState([]);
-    const add_list_element = (new_player) => {
-        set_player_list(existing_players => {
-            return [new_player, ...existing_players];
-        })
-    }
+
     const delete_list_element_end = () => {
         set_player_list(existing_players => {
             return existing_players.slice(0, existing_players.length-1);
@@ -82,6 +84,57 @@ export default function Game (){
 
     }
 
+    //Answer List
+    const[answer_list, set_answer_list] = useState([]);
+
+    const set_answer_list_element = (index, new_element) => {
+        set_answer_list(existing_answers => {
+            return [
+                ...existing_answers.slice(0,index),
+                existing_answers[index] = new_element,
+                ...existing_answers.slice(index + 1)
+            ]
+        })
+    }
+
+    async function refresh_answer_list() {
+
+        const answer_arr = await get_answers();
+
+        if (answer_list.length !== answer_arr.length) {
+            
+            for(var i = 0; i < answer_arr.length; i++) {
+                let answer_array_parts = answer_arr[i];
+                
+                let answer_str = "";
+                for(var i = 0; i < answer_array_parts.length; i++) {
+
+                    answer_str += answer_array_parts[i].text + " ";
+                    
+                }
+                
+                set_answer_list_element(i, answer_str);
+
+            }
+
+        }
+
+    }
+
+    //Commit answer
+    async function commitAnswerHandle() {
+        let answer_array = [];
+        let pos = 0;
+        for(var i = 0; i < card_selected.length; i++) {
+            if (card_selected[i]) {
+                answer_array[pos] = white_card[i].id;
+                pos++;
+            }
+        }
+        
+        await commit_answer(answer_array);
+    }
+
 ///////////////////////////////////////////////////step//////////////////////////////////////////
     const [count, setCount] = useState(0);
     useEffect(() => {
@@ -99,15 +152,20 @@ export default function Game (){
                 if (await get_czar() === "Czar") {
                     setIsCzar("Czar");
                     
+                    //all 4 secs
+
+                    if (count % 2 == 0) await refresh_answer_list();
 
                 } else {
                     setIsCzar("Player");
 
                     //set white cards array
-                    white_card = await get_white_cards();
+                    refresh_white_cards();
+
                     //get how many cards can be selected
                     selected_allowed = await get_black_card();
                     selected_allowed = selected_allowed.pick;
+
                 }
 
             } else {
@@ -137,21 +195,67 @@ export default function Game (){
         } 
     }
 
-    //Cards selected
-    function toggleSelected(card) {
-        let selected_count = 0;
-        for(var i = 0; i < selected.length; i++) {
-            if (selected[i] === true) selected_count++;
-        }
 
-        if (selected[card] === false && selected_count >= selected_allowed) {
-            
-        } else {
-            selected[card] = !(selected[card]);
+    //Answer selected
+    const[answer_selected, set_answer_selected] = useState(-1);
+
+    //white cards 
+    const[white_card_list, set_white_card_list] = useState([]);
+    
+
+    //set white card
+    const set_white_card = (index, new_card) => {
+        set_white_card_list(existing_cards => {
+            return [
+                ...existing_cards.slice(0,index),
+                existing_cards[index] = new_card,
+                ...existing_cards.slice(index + 1)
+            ]
+        })
+    }
+
+    async function refresh_white_cards() {
+        white_card = await get_white_cards();
+        if (white_card.length != white_card_list.length) {
+            for(var i = 0; i < white_card.length; i++) {
+                set_white_card(i,white_card[i].text);
+            }
         }
     }
-    function selectedHandle(card) {
-        return selected[card];
+
+    //Selected white cards 
+    const[card_selected, set_card_selected] = useState([-1]);
+
+    function card_selected_handle(index) {
+        for(var i = 0; i < card_selected.length; i++) {
+            if (card_selected[i] == index) return true;
+        }
+        return false;
+    }
+    function set_card_selected_handle(index) {
+        let array_modify = card_selected;
+        let pos = 0;
+        for(var i = 0; i < selected_allowed - 1; i++) {
+            if (array_modify.length > i) {
+                array_modify[i] = array_modify[i+1];
+                pos++;
+            }
+        }
+        array_modify[pos] = index;
+        set_card_selected(array_modify);
+
+    }
+
+    //Winner
+    async function winner_handle() {
+        let answers_test = await get_answers();
+        let winner_arr = answers_test[answer_selected];
+        let id_arr = [];
+        for(var i = 0; i < winner_arr.length; i++) {
+            id_arr[i] = winner_arr[i].id;
+        }
+
+        put_winner(id_arr);
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -171,21 +275,22 @@ export default function Game (){
                 <input id = "black_card" placeholder= {black_card.text}></input>
             </div>
 
-            {isCzar === "Player" ? <div className='Player-Board'>
-                <div className='White-Card'>
-                    <button id = {selectedHandle(0) ? "card_selected" : "card_default"} onClick = {() => toggleSelected(0)}>{white_card[0].text}</button>
-                    <button id = {selectedHandle(1) ? "card_selected" : "card_default"} onClick = {() => toggleSelected(1)}>{white_card[1].text}</button>
-                    <button id = {selectedHandle(2) ? "card_selected" : "card_default"} onClick = {() => toggleSelected(2)}>{white_card[2].text}</button>
-                    <button id = {selectedHandle(3) ? "card_selected" : "card_default"} onClick = {() => toggleSelected(3)}>{white_card[3].text}</button>
-                    <button id = {selectedHandle(4) ? "card_selected" : "card_default"} onClick = {() => toggleSelected(4)}>{white_card[4].text}</button>
-                    <button id = {selectedHandle(5) ? "card_selected" : "card_default"} onClick = {() => toggleSelected(5)}>{white_card[5].text}</button>
-                    <button id = {selectedHandle(6) ? "card_selected" : "card_default"} onClick = {() => toggleSelected(6)}>{white_card[6].text}</button>
-                    <button id = {selectedHandle(7) ? "card_selected" : "card_default"} onClick = {() => toggleSelected(7)}>{white_card[7].text}</button>
-                    <button id = {selectedHandle(8) ? "card_selected" : "card_default"} onClick = {() => toggleSelected(8)}>{white_card[8].text}</button>
-                    <button id = {selectedHandle(9) ? "card_selected" : "card_default"} onClick = {() => toggleSelected(9)}>{white_card[9].text}</button>
-                </div> 
-                <button id = "Commit-Answer-Button"> Commit Answer </button>
+            {isCzar === "Player" ? <div>
+                <ul className='White-Cards-Table'>
+                    {white_card_list.map((card_text, index) => {
+                        return (
+                            <li key = {index}>
+                                <button id = "Choose-Card-Button" onClick={() => set_card_selected_handle(index)}> {card_text} </button>
+                                <button id = {card_selected_handle(index)  ? "Card_Selected" : "Card_Default"} onClick = {() => set_card_selected_handle(index)}>o</button>
+                            </li>
+                        )
+                    })}
+                </ul> 
+
+                <button id = "Commit-Answer-Button" onClick = {commitAnswerHandle}> Commit Answer </button>
             </div> : null}
+
+            
         </div>
 
         <ul className='Player-Table'>
@@ -193,11 +298,26 @@ export default function Game (){
                 return (
                     <li key = {index}>
                         <span>{player_name}</span>
-                        {/*<button id = "test"> Kick </button>*/}
                     </li>
                 )
             })}
         </ul>
+
+        {isCzar === "Czar" ? <div className='Czar-Table'>
+            <ul className='Answer-Table'>
+                {answer_list.map((answer_text, index) => {
+                    return (
+                        <li key = {index}>
+                            <button id = "Choose-Answer-Button" onClick={() => set_answer_selected(index)}> {answer_text} </button>
+                            <button id = {answer_selected === index ? "Answer_Selected" : "Answer_Default"} onClick = {() => set_answer_selected(index)}>o</button>
+                        </li>
+                    )
+                })}
+            </ul> 
+
+            <button id = "Select-Winner-Button" onClick={() => winner_handle()}> Winner </button>
+
+        </div> : null}
         
         
     </div>
