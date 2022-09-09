@@ -25,6 +25,7 @@ export default async function commit_answer(white_cards, game_id = window.game_i
         return true;
     } catch (ex) {
         console.error(ex);
+        return false;
     }
     
 }

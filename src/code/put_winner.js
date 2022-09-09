@@ -25,6 +25,7 @@ export default async function put_winner(winner_cards, game_id = window.game_id,
         return true;
     } catch (ex) {
         console.error(ex);
+        return false;
     }
     
 }

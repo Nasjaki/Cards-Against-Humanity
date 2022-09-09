@@ -13,14 +13,15 @@ import Home from "./component/home.js";
 import Game from "./component/game.js";
 import ErrorPage from "./component/errorpage.js";
 
+
 window.game_id = -1;
 window.player_id = -1;
 
 
 function App() {
+
   return (
     <div className="App">
-      
         <Router>
           <div className="App">
               <div className='Router-Header'>

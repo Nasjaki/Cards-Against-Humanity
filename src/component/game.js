@@ -7,9 +7,8 @@ import game_leave from '../code/game_leave';
 import game_start from '../code/game_start';
 import game_stop from '../code/game_stop';
 import game_active from '../code/game_active';
-import get_black_card from '../code/get_black_card';
+import get_game_info from '../code/get_game_info';
 import get_white_cards from '../code/get_white_cards';
-import get_czar from '../code/get_czar';
 import get_players_lobby from '../code/get_players_lobby'
 import commit_answer from '../code/commit_answer';
 import get_answers from '../code/get_answers';
@@ -21,21 +20,23 @@ import { useNavigate } from "react-router-dom";
 
 
 
+
+
 let black_card = "";
 let card_count = 10;
 let white_card = [];
 for(var i = 0; i < card_count; i++) {
     white_card[i] = "";
-
 }
 
+let score_arr = [];
 let card_selected = [];
 let selected_allowed = 0;
+
 
 async function gameActiveHandle() {
     return await game_active();
 }
-
 
 
 
@@ -61,15 +62,17 @@ export default function Game (){
             return existing_players.slice(0, existing_players.length-1);
         })
     }
-    const set_list_element = (index, new_element) => {
+    const set_list_element = (key, new_element) => {
         set_player_list(existing_players => {
             return [
-                ...existing_players.slice(0,index),
-                existing_players[index] = new_element,
-                ...existing_players.slice(index + 1)
+                                        //0 -> at the beginning
+                ...existing_players.slice(0,key),
+                existing_players[key] = new_element,
+                ...existing_players.slice(key + 1)
             ]
         })
     }
+
 
     async function refresh_player_list() {
         const player_arr = await get_players_lobby();
@@ -121,18 +124,30 @@ export default function Game (){
 
     }
 
+    //Refresh the score
+    async function refresh_score() {
+        score_arr = await get_game_info("Points");
+        //console.log(score_arr);
+    }
+
     //Commit answer
     async function commitAnswerHandle() {
         let answer_array = [];
         let pos = 0;
+
         for(var i = 0; i < card_selected.length; i++) {
-            if (card_selected[i]) {
-                answer_array[pos] = white_card[i].id;
-                pos++;
-            }
+            answer_array[pos] = white_card[card_selected[i]].id;
+            pos++;
         }
         
-        await commit_answer(answer_array);
+
+        if (await commit_answer(answer_array) === true){
+            //Reset card selected
+            set_card_selected([]);
+
+        }
+
+
     }
 
 ///////////////////////////////////////////////////step//////////////////////////////////////////
@@ -146,10 +161,14 @@ export default function Game (){
                 //Display active
                 setGameActive("Aktiv");
                 //Current Black Card
-                black_card = await get_black_card();
+                black_card = await get_game_info("BlackCard");
+
+                //Refresh score
+                refresh_score();
 
                 //Game Loop as czar or as player
-                if (await get_czar() === "Czar") {
+                let czar = await get_game_info("Czar");
+                if (czar.id === window.player_id) {
                     setIsCzar("Czar");
                     
                     //all 4 secs
@@ -163,7 +182,7 @@ export default function Game (){
                     refresh_white_cards();
 
                     //get how many cards can be selected
-                    selected_allowed = await get_black_card();
+                    selected_allowed = await get_game_info("BlackCard");
                     selected_allowed = selected_allowed.pick;
 
                 }
@@ -255,7 +274,12 @@ export default function Game (){
             id_arr[i] = winner_arr[i].id;
         }
 
-        put_winner(id_arr);
+        if (await put_winner(id_arr)){
+            //Reset answer selected
+            set_answer_selected(-1);
+            //Reset answer list
+            set_answer_list([]);
+        }
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -275,7 +299,7 @@ export default function Game (){
                 <input id = "black_card" placeholder= {black_card.text}></input>
             </div>
 
-            {isCzar === "Player" ? <div>
+            {isCzar === "Player"  ? <div>
                 <ul className='White-Cards-Table'>
                     {white_card_list.map((card_text, index) => {
                         return (
@@ -297,8 +321,9 @@ export default function Game (){
             {player_list.map((player_name, index) => {
                 return (
                     <li key = {index}>
-                        <span>{player_name}</span>
+                        <span>{player_name}</span> <span> {score_arr[index]}</span>
                     </li>
+                    
                 )
             })}
         </ul>
@@ -318,7 +343,6 @@ export default function Game (){
             <button id = "Select-Winner-Button" onClick={() => winner_handle()}> Winner </button>
 
         </div> : null}
-        
         
     </div>
 }

@@ -1,33 +1,22 @@
 import get_games from "./get_games";
+import game_stop from "./game_stop";
 
 
 const url = "https://gruppe5.toni-barth.com/";
 
 export default async function delete_game(id = -1) {
 
-    const delete_array = [];
-    if (id == -1) {
-        let g_json = await get_games();
-        g_json = g_json;
 
-        for(var i in g_json){
-            //add all to delete list
-            if(g_json[i] instanceof Object){
-                delete_array[i] = g_json[i].id;
-            }
-        } 
+    let g_json = await get_games();
+    for(var i in g_json){
 
-    } else {
-        //delete list = id
-        delete_array[0] = id;
-    }
-    for(var i in delete_array){
-        let game_id = delete_array[i];
+        await game_stop(g_json[i].id, g_json[i].owner.id);
 
-        await fetch(url + "games/" + game_id, {
+        await fetch(url + "games/" + g_json[i].id, {
             method: 'DELETE',
         });
-        console.log("deleted id: " + game_id);
-    }
+        console.log("deleted id: " + g_json[i].id);
+    } 
+
     
 }
