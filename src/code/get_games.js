@@ -13,8 +13,8 @@ export default async function get_games(game_id = -1) {
     .then(result => result.json())
     .then( json => {
 
-
         if (game_id !== -1) { 
+            
             for(var i in json.games) {
                 if (game_id == json.games[i].id) {
                     

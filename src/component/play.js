@@ -24,9 +24,9 @@ export default function Play (){
    let navigate = useNavigate();
 
    async function createGameHandle() {
-      let running = await create_game(window.player_id);
+      let running = await create_game();
 
-      if (running) {
+      if (running == true) {
          navigate("/game");
       } else {
          navigate("/login");

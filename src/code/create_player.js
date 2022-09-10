@@ -14,7 +14,7 @@ export default async function create_player(name_str) {
             "name" : name_str
         })
     })
-    .then(response => response.json)
+    .then(response => response.json())
     .then(json => {
         window.player_id = json.id;
         return true;
