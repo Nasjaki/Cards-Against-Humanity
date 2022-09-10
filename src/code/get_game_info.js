@@ -3,16 +3,16 @@ const url = "https://gruppe5.toni-barth.com/";
 
 export default async function get_game_info(type, game_id = window.game_id) {
 
-    try {
-        let response = await fetch(url + "games/" + game_id, {    
-            method: 'GET',
-            headers: {
-                'Content-Type':'application/json',
-            }
-        });
-        let json = await response.json();
+    return await fetch(url + "games/" + game_id, {    
+        method: 'GET',
+        headers: {
+            'Content-Type':'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(json => {
 
-        let info = "Error";
+        let info = "";
         switch(type){
             case("General"):
                 info = json;
@@ -32,9 +32,11 @@ export default async function get_game_info(type, game_id = window.game_id) {
         }
         
         return info;
-        
-    } catch (ex) {
-        console.error(ex);
+
+    })
+    .catch(error => {
+        console.log(error)
         return false;
-    }
+    })
+
 }
