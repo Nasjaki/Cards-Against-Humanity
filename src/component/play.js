@@ -33,25 +33,27 @@ export default function Play (){
       }
    } 
    async function joinGameHandle() {
-      let joined = await game_join(document.getElementById("Join-Game-Input").value);
+      let input = document.getElementById("Join-Game-Input").value;
+      if (input !== "") {
+         let joined = await game_join(input);
 
-      switch(joined) {
-         case("Game"):
-            navigate("/game");
-         break;
-         case("Login"):
-            navigate("/login");
-         break;
-         case("Error"):
-            console.log("Game already started");
-         break;
+         switch(joined) {
+            case("Game"):
+               navigate("/game");
+            break;
+            case("Login"):
+               navigate("/login");
+            break;
+            case("Error"):
+               console.log("Game already started");
+            break;
+         }
       }
    } 
 
    async function joinRandomGameHandle() {
       let not_active_game_id = await get_game_waiting();
-   
-      console.log(not_active_game_id);
+
    
       if (not_active_game_id !== false) {
          let joined = await game_join(not_active_game_id);
@@ -73,15 +75,14 @@ export default function Play (){
  return <div className='Play-Header'>
    <h1>Play</h1>
    
-   <div className='Play-Buttons'>
-      <button id = "Create-Game-Button" onClick={createGameHandle}> Create Game </button>
-      <button id = "Debug-Games-Button" onClick={debugGamesHandle}> Debug Games </button>
-      <button id = "Delete-Game-Button" onClick={deleteGameHandle}> Delete Game </button>
-      <button id = "Join-Game-Button" onClick={joinGameHandle}> Join Game </button>
-      <button id = "Join-Random-Game-Button" onClick={joinRandomGameHandle}> Join Random Game </button>
-   </div>
+   <button className='Game-Buttons Button-Block' id = "Create-Game-Button" onClick={createGameHandle}> Create Game </button>
+   <button className='Game-Buttons Button-Block' id = "Join-Random-Game-Button" onClick={joinRandomGameHandle}> Join Random Game </button>
+    <button className='Game-Buttons Button-Block' id = "Join-Game-Button" onClick={joinGameHandle}> Join Game </button>
+    
+    <input className='Game-Buttons Button-Block' id = "Join-Game-Input" placeholder='Game ID'></input>
 
-   <input id = "Join-Game-Input" placeholder='Game ID'></input>
+    <button id = "Debug-Games-Button" onClick={debugGamesHandle}> Debug Games </button>
+    <button id = "Delete-Game-Button" onClick={deleteGameHandle}> Delete Game </button>
 
  </div>
  

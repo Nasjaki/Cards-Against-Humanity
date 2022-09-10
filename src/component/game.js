@@ -13,6 +13,7 @@ import get_players_lobby from '../code/get_players_lobby'
 import commit_answer from '../code/commit_answer';
 import get_answers from '../code/get_answers';
 import put_winner from '../code/put_winner';
+import get_games from '../code/get_games';
 
 
 import { useState, useEffect } from "react";
@@ -32,12 +33,6 @@ for(var i = 0; i < card_count; i++) {
 let score_arr = [];
 let card_selected = [];
 let selected_allowed = 0;
-
-
-async function gameActiveHandle() {
-    return await game_active();
-}
-
 
 
 export default function Game (){
@@ -74,8 +69,7 @@ export default function Game (){
     }
 
 
-    async function refresh_player_list() {
-        const player_arr = await get_players_lobby();
+    async function refresh_player_list(player_arr) {
 
         if (player_arr.length !== player_list.length) {
 
@@ -104,6 +98,8 @@ export default function Game (){
 
         const answer_arr = await get_answers();
 
+
+
         if (answer_list.length !== answer_arr.length) {
             
             for(var i = 0; i < answer_arr.length; i++) {
@@ -125,9 +121,8 @@ export default function Game (){
     }
 
     //Refresh the score
-    async function refresh_score() {
-        score_arr = await get_game_info("Points");
-        //console.log(score_arr);
+    async function refresh_score(points) {
+        score_arr = points;
     }
 
     //Commit answer
@@ -154,25 +149,31 @@ export default function Game (){
     const [count, setCount] = useState(0);
     useEffect(() => {
         setTimeout(async () => {
-            setCount((count) => count + 1);
+            setCount(count + 1);
 
+            //current game stats
+            let game_stats = await get_games(window.game_id);
+            
+            
             //only in game active possible
-            if (await gameActiveHandle()) {
+            if (game_stats.running == true) {
                 //Display active
                 setGameActive("Aktiv");
+
+                let currInfo = await get_game_info("General");
+
                 //Current Black Card
-                black_card = await get_game_info("BlackCard");
+                black_card = currInfo.currentBlackCard;
 
                 //Refresh score
-                refresh_score();
+                refresh_score(currInfo.points);
 
                 //Game Loop as czar or as player
-                let czar = await get_game_info("Czar");
+                let czar = currInfo.czar;
                 if (czar.id === window.player_id) {
                     setIsCzar("Czar");
                     
                     //all 4 secs
-
                     if (count % 2 == 0) await refresh_answer_list();
 
                 } else {
@@ -196,11 +197,11 @@ export default function Game (){
 
 
                 //all 4 secs
-                if (count % 2 == 0) await refresh_player_list();
+                if (count % 2 == 0) await refresh_player_list(game_stats.players);
 
             }
 
-
+            
 
           }, 2000);
     });
@@ -268,6 +269,8 @@ export default function Game (){
     //Winner
     async function winner_handle() {
         let answers_test = await get_answers();
+
+        
         let winner_arr = answers_test[answer_selected];
         let id_arr = [];
         for(var i = 0; i < winner_arr.length; i++) {
@@ -287,9 +290,9 @@ export default function Game (){
         <h1>Game {game_active}</h1>
         <h2>{window.game_id}</h2>
 
-        {game_active !== "Aktiv" ? <button id = "Start-Game-Button" onClick={toggleGameHandle}> Start Game </button> : 
-        <button id = "Stop-Game-Button" onClick={toggleGameHandle}> Stop Game </button>}
-        <button id = "Leave-Game-Button" onClick={leaveGameHandle}> Leave Game </button>
+        {game_active !== "Aktiv" ? <button className='Game-Buttons' id = "Start-Game-Button" onClick={toggleGameHandle}> Start Game </button> :
+        <button className='Game-Buttons ' id = "Stop-Game-Button" onClick={toggleGameHandle}> Stop Game </button>}
+        <button className='Game-Buttons ' id = "Leave-Game-Button" onClick={leaveGameHandle}> Leave Game </button>
        
 
         <h3>{isCzar}</h3>
@@ -304,14 +307,19 @@ export default function Game (){
                     {white_card_list.map((card_text, index) => {
                         return (
                             <li key = {index}>
-                                <button id = "Choose-Card-Button" onClick={() => set_card_selected_handle(index)}> {card_text} </button>
-                                <button id = {card_selected_handle(index)  ? "Card_Selected" : "Card_Default"} onClick = {() => set_card_selected_handle(index)}>o</button>
+                                <div className='Card-Parent'>
+                                    <button id = "Choose-Card-Button" onClick={() => set_card_selected_handle(index)}> {card_text} </button>
+                                    <div>
+                                        <button className='Card-Selection' id = {card_selected_handle(index)  ? "Card_Selected" : "Card_Default"} onClick = {() => set_card_selected_handle(index)}>o</button>
+                                    </div>
+                                </div>
+
                             </li>
                         )
                     })}
                 </ul> 
 
-                <button id = "Commit-Answer-Button" onClick = {commitAnswerHandle}> Commit Answer </button>
+                <button className='Game-Buttons' id = "Commit-Answer-Button" onClick = {commitAnswerHandle}> Commit Answer </button>
             </div> : null}
 
             
@@ -332,15 +340,21 @@ export default function Game (){
             <ul className='Answer-Table'>
                 {answer_list.map((answer_text, index) => {
                     return (
-                        <li key = {index}>
-                            <button id = "Choose-Answer-Button" onClick={() => set_answer_selected(index)}> {answer_text} </button>
-                            <button id = {answer_selected === index ? "Answer_Selected" : "Answer_Default"} onClick = {() => set_answer_selected(index)}>o</button>
-                        </li>
+                        <div>
+                            <li key = {index}>
+                                <div className='Card-Parent'>
+                                    <button id = "Choose-Answer-Button" onClick={() => set_answer_selected(index)}> {answer_text} </button>
+                                    <div>
+                                        <button className='Card-Selection' id = {answer_selected === index ? "Answer_Selected" : "Answer_Default"} onClick = {() => set_answer_selected(index)}>o</button>
+                                    </div>
+                                </div>
+                            </li>
+                        </div>
                     )
                 })}
             </ul> 
 
-            <button id = "Select-Winner-Button" onClick={() => winner_handle()}> Winner </button>
+            <button className='Game-Buttons' id = "Select-Winner-Button" onClick={() => winner_handle()}> Winner </button>
 
         </div> : null}
         

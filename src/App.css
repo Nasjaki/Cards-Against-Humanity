@@ -1,17 +1,41 @@
+body {
+  background: #767676;
+}
+
 .App {
   text-align: center;
 }
+/*turns off dots in front of list*/
 
+ul{
+  list-style-type: none;
+  padding: 0px;
+}
 
 .Router-Header {
   display: flex;
   flex-direction: row;
+  justify-content: space-evenly;
 
 }
 .Router-List {
   display:flex;
-  flex-direction: column;
-  
+  flex-direction: row;
+}
+.Router-List li:hover{
+  color: rgb(240, 240, 240);
+  transition: 250ms ease;
+  box-shadow: inset 0 0 0 0.2rem;
+}
+
+.Router-List li{
+  padding: 10px 30px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 0px 0.5rem 1.2rem rgba(0, 0, 0, 0.4);
+
 }
 
 .Login-Buttons {
@@ -19,46 +43,228 @@
   height: 100px;
 
 }
+/*Player-Table*/
+
+.Player-Table{
+  background-color: rgba(54, 53, 53, 0.6);
+  border-radius: 8px;
+  margin: auto;
+  width: 30%;
+}
+
+/*Cards*/
 
 .Cards {
-  margin-top: 20px;
+  margin-top: 3rem;
   
 }
 .Black-Card {
   color:black;
   background-color: black;
   padding: 10px;
+
+  /*temporarily turned off, must be triggered when in waiting lobby or in game*/
+  /*display: none;*/
+
 }
 #black_card {
-  width: 500px;
+  width: 400px;
 }
-.White-Card {
-  margin-top: 20px;
+
+.Card-Parent {
+  position: relative;
+}
+
+.Card-Parent:hover{
+  transition: 250ms ease;
+  transform: matrix(1.1, -0.06, 0.06, 1.1, 0, 0);
+}
+
+.White-Cards-Table li{
+  margin-top: 0px;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  display: inline-block;
+}
+
+#Choose-Card-Button{
+  display: inline-flex;
+  text-align: start;
+  height: 10rem;
+  width: 7rem;
+  padding: 6px;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0rem 0.1rem 0.5rem  rgba(0, 0, 0, 0.6);
+}
+#Choose-Card-Button:hover{
+  cursor: pointer;
+}
+
+.Card-Selection{
   display: flex;
-  flex-direction: column;
+  position: absolute;
+  transform: translate(50%, -115%);
+  bottom: 0rem;
+  right: 50%;
+  border: none;
+  border-radius: 6px;
+}
+
+#Card_Selected {
+  background-color: green;
+  border-color: green;
+}
+#Card_Default {
+  background-color: darkred;
+  border-color: darkred;
 }
 
 #Commit-Answer-Button {
-  margin-top: 30px;
+  margin-top: 2rem;
 }
 
+.Answer-Table li{
+  margin-top: 0px;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  display: inline-block;
+}
+
+#Choose-Answer-Button{
+  display: inline-flex;
+  text-align: start;
+  height: 10rem;
+  width: 7rem;
+  padding: 6px;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0rem 0.1rem 0.5rem  rgba(0, 0, 0, 0.6);
+}
+#Choose-Answer-Button:hover {
+  cursor: pointer;
+}
+
+#Answer_Selected {
+  background-color: green;
+
+}
+#Answer_Default {
+  background-color: blue;
+}
+
+/*what are these for*/
 #card_default {
-  color: black;
+  color: magenta;
 }
 #card_selected {
   color: green;
 }
 
-#Answer_Selected {
-  background-color: green;
-}
-#Answer_Default {
-  background-color: gray;
+
+
+/*turns off link color and decoration*/
+
+a{
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
 }
 
-#Card_Selected {
-  background-color: green;
+/*Buttons*/
+
+.Game-Buttons{
+  background-color: white;
+  color: black;
+  border: none;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 12px 28px;
+  border-radius: 8px;
+  min-width: 160px;
+  margin: auto;
+  margin-top: 100px;
+  box-shadow: 0rem 0.1rem 0.5rem  rgba(0, 0, 0, 0.4);
+
 }
-#Card_Default {
-  background-color: gray;
+
+/*Buttons in game menu*/
+
+#Start-Game-Button{
+  margin: auto;
+  margin-top: 2rem;
 }
+
+#Stop-Game-Button{
+
+  margin: auto;
+  margin-top: 2rem;
+}
+
+#Leave-Game-Button{
+  margin-left: 3rem;
+  margin-top: 2rem;
+}
+
+/*formatting buttons beneath each other*/
+
+.Button-Block{
+  width: 20%;
+  display: block;
+}
+
+/*increase size of button when hovering over*/
+
+.Game-Buttons:hover{
+  cursor: pointer;
+  transition: 300ms ease;
+  transform: scale(1.2);
+}
+
+/*Buttons in play menu*/
+
+#Create-Game-Button{
+  margin: auto;
+  margin-top: 100px;
+}
+
+#Join-Game-Button{
+  margin: auto;
+  margin-top: 50px;
+}
+
+#Join-Game-Input{
+  font-weight: 500;
+  padding: 12px 0px;
+  margin: auto;
+  margin-top: 15px;
+  outline: none;
+  text-align: center;
+}
+#Join-Game-Input:hover{
+  cursor: text;
+  transform: none;
+}
+
+
+/*temporarily turns off unimportant buttons*/
+
+#Debug-User-Button{
+  display: none;
+}
+
+#Delete-User-Button{
+  display: none;
+}
+
+#Debug-Games-Button{
+  /*display: none;*/
+}
+
+#Delete-Game-Button{
+  display: none;
+}
+
