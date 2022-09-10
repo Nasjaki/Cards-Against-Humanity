@@ -21,7 +21,6 @@ export default async function create_game(owner_id = window.player_id, packs = 0
     })
     .then(response => response.json())
     .then(json => {
-        console.log(json);
         window.game_id = json.id;
         return true;
     })

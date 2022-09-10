@@ -257,7 +257,7 @@ a{
 }
 
 #Delete-User-Button{
-  display: none;
+  /*display: none;*/
 }
 
 #Debug-Games-Button{
@@ -265,6 +265,6 @@ a{
 }
 
 #Delete-Game-Button{
-  display: none;
+  /*display: none;*/
 }
 

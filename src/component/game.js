@@ -14,6 +14,7 @@ import commit_answer from '../code/commit_answer';
 import get_answers from '../code/get_answers';
 import put_winner from '../code/put_winner';
 import get_games from '../code/get_games';
+import is_owner from '../code/is_owner';
 
 
 import { useState, useEffect } from "react";
@@ -35,8 +36,11 @@ let card_selected = [];
 let selected_allowed = 0;
 
 
-export default function Game (){
+let player_is_owner = false;
 
+
+export default function Game (){
+    
     //Spiel Aktiv
     const [game_active, setGameActive] = useState("");
     async function toggleGameHandle() {
@@ -70,6 +74,7 @@ export default function Game (){
 
 
     async function refresh_player_list(player_arr) {
+
 
         if (player_arr.length !== player_list.length) {
 
@@ -145,7 +150,14 @@ export default function Game (){
 
     }
 
-///////////////////////////////////////////////////step//////////////////////////////////////////
+    //mount
+    useEffect(() => {
+        setTimeout(async () => {
+            player_is_owner = await is_owner();
+        }, []); 
+    });
+
+    ///////////////////////////////////////////////////step//////////////////////////////////////////
     const [count, setCount] = useState(0);
     useEffect(() => {
         setTimeout(async () => {
@@ -290,8 +302,12 @@ export default function Game (){
         <h1>Game {game_active}</h1>
         <h2>{window.game_id}</h2>
 
-        {game_active !== "Aktiv" ? <button className='Game-Buttons' id = "Start-Game-Button" onClick={toggleGameHandle}> Start Game </button> :
-        <button className='Game-Buttons ' id = "Stop-Game-Button" onClick={toggleGameHandle}> Stop Game </button>}
+
+        {player_is_owner ? <div>
+            {game_active !== "Aktiv" ? <button className='Game-Buttons' id = "Start-Game-Button" onClick={toggleGameHandle}> Start Game </button> :
+            <button className='Game-Buttons ' id = "Stop-Game-Button" onClick={toggleGameHandle}> Stop Game </button>}
+        </div> : null}
+        
         <button className='Game-Buttons ' id = "Leave-Game-Button" onClick={leaveGameHandle}> Leave Game </button>
        
 
