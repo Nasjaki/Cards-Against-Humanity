@@ -7,8 +7,7 @@ export default async function create_game(owner_id, packs = 0, goal = 10) {
         return false;
     } 
 
-    try {
-        let response = await fetch(url + "games/", {
+    return await fetch(url + "games/", {
             method: 'POST',
             headers: {
                 'Content-Type':'application/json',
@@ -18,13 +17,15 @@ export default async function create_game(owner_id, packs = 0, goal = 10) {
                 //"packs" : [packs],
                 //"goal" : goal
             })
-        });
-        let json = await response.json();
-        console.log(json.id);
+    })
+    .then(response => response.json())
+    .then(json => {
         window.game_id = json.id;
-
         return true;
-    } catch (ex) {
-        console.error(ex);
-    }
+    })
+    .catch(error => {
+        console.log(error);
+        return false;
+    })
+    
 }

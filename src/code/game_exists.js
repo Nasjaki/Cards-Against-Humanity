@@ -6,7 +6,6 @@ export default async function game_exists(game_id) {
     let games = await get_games();
 
     for(var i in games) {
-        console.log(games[i].id);
         if (game_id === games[i].id) {
             return true;
         }

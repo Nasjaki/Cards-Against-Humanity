@@ -6,7 +6,7 @@ export default async function game_start(game_id = window.game_id, player_id = w
 
     if (await game_active(game_id) === false) return false;
 
-    fetch(url + "games/" + game_id + "/" + player_id, {
+    return fetch(url + "games/" + game_id + "/" + player_id, {
         method: 'PATCH',
         headers: {
             'Content-Type':'application/json',
@@ -14,11 +14,11 @@ export default async function game_start(game_id = window.game_id, player_id = w
         body: JSON.stringify({
             "action" : "end"
         })
-    }).then(function(response) {
-        console.log("player: " + player_id + " stopped the game: " + game_id);
-        console.log(response);
-    }).catch(function(error){
+    })
+    .then(response => {return true})
+    .catch(error => {
         console.log(error);
+        return false;
     });
 
 }

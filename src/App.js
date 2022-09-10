@@ -27,13 +27,20 @@ function App() {
               <div className='Router-Header'>
                 <ul className = 'Router-List'>
                   <li>
-                    <Link to="/">Home</Link>
+                    <Link to="/">
+                      <button className='Header-Buttons'> Home </button>
+                    </Link>
                   </li>
                   <li>
-                    <Link to="/login">Login</Link>
+                    <Link to="/login">
+                      <button className='Header-Buttons'> Login </button>
+                    </Link>
+                    
                   </li>
                   <li>
-                    <Link to="/play">Play</Link>
+                    <Link to="/play">
+                      <button className='Header-Buttons'> Play </button>
+                    </Link>
                   </li>
                 </ul>
               </div>

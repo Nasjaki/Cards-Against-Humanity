@@ -5,10 +5,7 @@ export default async function put_winner(winner_cards, game_id = window.game_id,
 
     if (winner_cards.length === 0) return false;
 
-    console.log(winner_cards)
-
-    try {
-        let response = await fetch(url + "games/" + game_id + "/offers/" + player_id, {
+    return await fetch(url + "games/" + game_id + "/offers/" + player_id, {
             
             method: 'PUT',
             headers: {
@@ -18,14 +15,10 @@ export default async function put_winner(winner_cards, game_id = window.game_id,
                 "cards" : winner_cards
                 
             })
-        });
-        
-        console.log("Winner crowned");
-
-        return true;
-    } catch (ex) {
-        console.error(ex);
+    })
+    .then(response => {return true})
+    .catch(error => {
+        console.log(error);
         return false;
-    }
-    
+    })
 }
