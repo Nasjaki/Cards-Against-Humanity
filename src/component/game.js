@@ -35,6 +35,7 @@ let score_arr = [];
 let card_selected = [];
 let selected_allowed = 0;
 
+let can_commit = true;
 
 let player_is_owner = false;
 
@@ -103,10 +104,9 @@ export default function Game (){
 
         const answer_arr = await get_answers();
 
-
-
         if (answer_list.length !== answer_arr.length) {
             
+            //add answers
             for(var i = 0; i < answer_arr.length; i++) {
                 let answer_array_parts = answer_arr[i];
                 
@@ -132,21 +132,31 @@ export default function Game (){
 
     //Commit answer
     async function commitAnswerHandle() {
+        let cards = card_selected;
+
         let answer_array = [];
         let pos = 0;
 
-        for(var i = 0; i < card_selected.length; i++) {
-            answer_array[pos] = white_card[card_selected[i]].id;
+        
+        for(var i = 0; i < cards.length; i++) {
+            answer_array[pos] = white_card[cards[i]].id;
             pos++;
         }
         
-
+        
         if (await commit_answer(answer_array) === true){
             //Reset card selected
             set_card_selected([]);
+            set_answer_selected([]);
 
-        }
+            for(var i = 0; i < cards.length; i++) {
+                delete_white_card(i);
+            }
 
+            //disable abillity to commit an answer
+            can_commit = false;
+        } 
+        
 
     }
 
@@ -189,15 +199,21 @@ export default function Game (){
                     if (count % 2 == 0) await refresh_answer_list();
 
                 } else {
-                    setIsCzar("Player");
+                    
+                    if (isCzar != "Player") {
+                        setIsCzar("Player");
 
+                        can_commit = true;
+                    }
+
+                    
                     //set white cards array
                     refresh_white_cards();
-
+                    
                     //get how many cards can be selected
                     selected_allowed = await get_game_info("BlackCard");
                     selected_allowed = selected_allowed.pick;
-
+                    
                 }
 
             } else {
@@ -246,23 +262,39 @@ export default function Game (){
         })
     }
 
+    const delete_white_card = (index) => {
+        set_white_card_list(existing_cards => {
+            return existing_cards.slice(0, index);
+        })
+    }
+
     async function refresh_white_cards() {
         white_card = await get_white_cards();
-        if (white_card.length != white_card_list.length) {
+        
+        if (white_card.length > white_card_list.length) {
             for(var i = 0; i < white_card.length; i++) {
                 set_white_card(i,white_card[i].text);
             }
+        } else if (white_card.length != white_card_list.length){
+            console.log("white card didnt get deleted from list");
         }
+        
     }
 
     //Selected white cards 
     const[card_selected, set_card_selected] = useState([-1]);
 
     function card_selected_handle(index) {
+
+
         for(var i = 0; i < card_selected.length; i++) {
-            if (card_selected[i] == index) return true;
+            if (card_selected[i] == index) {
+                return true;
+            }
         }
+
         return false;
+        
     }
     function set_card_selected_handle(index) {
         let array_modify = card_selected;
@@ -326,6 +358,7 @@ export default function Game (){
                                 <div className='Card-Parent'>
                                     <button id = "Choose-Card-Button" onClick={() => set_card_selected_handle(index)}> {card_text} </button>
                                     <div>
+                                        {/*<button className='Card-Selection' id = {card_selected_handle(index)  ? "Card_Selected" : "Card_Default"} onClick = {() => set_card_selected_handle(index)}>o</button> */}
                                         <button className='Card-Selection' id = {card_selected_handle(index)  ? "Card_Selected" : "Card_Default"} onClick = {() => set_card_selected_handle(index)}>o</button>
                                     </div>
                                 </div>
@@ -335,7 +368,7 @@ export default function Game (){
                     })}
                 </ul> 
 
-                <button className='Game-Buttons' id = "Commit-Answer-Button" onClick = {commitAnswerHandle}> Commit Answer </button>
+                {can_commit ? <button className='Game-Buttons' id = "Commit-Answer-Button" onClick = {commitAnswerHandle}> Commit Answer </button> : null}
             </div> : null}
 
             
@@ -359,7 +392,7 @@ export default function Game (){
                         <div>
                             <li key = {index}>
                                 <div className='Card-Parent'>
-                                    <button id = "Choose-Answer-Button" onClick={() => set_answer_selected(index)}> {answer_text} </button>
+                                    <button id = "Choose-Answer-Button" onClick={() => set_answer_selected(index) }> {answer_text} </button>
                                     <div>
                                         <button className='Card-Selection' id = {answer_selected === index ? "Answer_Selected" : "Answer_Default"} onClick = {() => set_answer_selected(index)}>o</button>
                                     </div>

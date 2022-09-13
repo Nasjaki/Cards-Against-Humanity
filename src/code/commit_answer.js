@@ -15,7 +15,9 @@ export default async function commit_answer(white_cards, game_id = window.game_i
                 
         })
     })
-    .then(response => {return true})
+    .then(response => {
+        return (response.ok);
+    })
     .catch(error => {
         console.log(error);
         return false;
