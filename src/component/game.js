@@ -74,19 +74,6 @@ export default function Game (){
     }
 
 
-    async function refresh_player_list(player_arr) {
-
-
-        if (player_arr.length !== player_list.length) {
-
-            for(var i = 0; i < player_arr.length; i++) {
-                set_list_element(i, player_arr[i].name + " " + player_arr[i].id);
-            }
-            if (player_arr.length < player_list.length) delete_list_element_end(); 
-        }
-
-    }
-
     //Answer List
     const[answer_list, set_answer_list] = useState([]);
 
@@ -104,6 +91,7 @@ export default function Game (){
 
         const answer_arr = await get_answers();
 
+
         if (answer_list.length !== answer_arr.length) {
             
             //add answers
@@ -111,12 +99,13 @@ export default function Game (){
                 let answer_array_parts = answer_arr[i];
                 
                 let answer_str = "";
-                for(var i = 0; i < answer_array_parts.length; i++) {
+                for(var i2 = 0; i2 < answer_array_parts.length; i2++) {
 
-                    answer_str += answer_array_parts[i].text + " ";
+                    answer_str += answer_array_parts[i2].text + " ";
                     
                 }
                 
+
                 set_answer_list_element(i, answer_str);
 
             }
@@ -128,11 +117,13 @@ export default function Game (){
     //Refresh the score
     async function refresh_score(points) {
         score_arr = points;
+        console.log(score_arr);
     }
 
     //Commit answer
     async function commitAnswerHandle() {
         let cards = card_selected;
+        set_card_selected([]);
 
         let answer_array = [];
         let pos = 0;
@@ -142,7 +133,7 @@ export default function Game (){
             answer_array[pos] = white_card[cards[i]].id;
             pos++;
         }
-        
+
         
         if (await commit_answer(answer_array) === true){
             //Reset card selected
@@ -175,7 +166,7 @@ export default function Game (){
 
             //current game stats
             let game_stats = await get_games(window.game_id);
-            
+
             
             //only in game active possible
             if (game_stats.running == true) {
@@ -184,8 +175,14 @@ export default function Game (){
 
                 let currInfo = await get_game_info("General");
 
-                //Current Black Card
-                black_card = currInfo.currentBlackCard;
+                
+                //new black card -> new round
+                if (black_card.text !== currInfo.currentBlackCard.text) {
+                    //Current Black Card 
+                    black_card = currInfo.currentBlackCard;
+                    can_commit = true;
+                } 
+                
 
                 //Refresh score
                 refresh_score(currInfo.points);
@@ -199,12 +196,7 @@ export default function Game (){
                     if (count % 2 == 0) await refresh_answer_list();
 
                 } else {
-                    
-                    if (isCzar != "Player") {
-                        setIsCzar("Player");
-
-                        can_commit = true;
-                    }
+                    setIsCzar("Player");
 
                     
                     //set white cards array
@@ -220,8 +212,11 @@ export default function Game (){
                 //Display not active
                 setGameActive();
 
-                black_card = "";
                 setIsCzar("");
+
+                black_card = "";
+
+                score_arr = [];
 
 
                 //all 4 secs
@@ -233,6 +228,19 @@ export default function Game (){
 
           }, 2000);
     });
+
+    async function refresh_player_list(player_arr) {
+
+
+        if (player_arr.length !== player_list.length) {
+
+            for(var i = 0; i < player_arr.length; i++) {
+                set_list_element(i, player_arr[i].name + " " + player_arr[i].id);
+            }
+            if (player_arr.length < player_list.length) delete_list_element_end(); 
+        }
+
+    }
 
     let navigate = useNavigate();
     async function leaveGameHandle() {
@@ -298,6 +306,8 @@ export default function Game (){
     }
     function set_card_selected_handle(index) {
         let array_modify = card_selected;
+
+
         let pos = 0;
         for(var i = 0; i < selected_allowed - 1; i++) {
             if (array_modify.length > i) {
