@@ -13,6 +13,8 @@ import Home from "./component/home.js";
 import Game from "./component/game.js";
 import ErrorPage from "./component/errorpage.js";
 
+import { useState, useEffect } from "react";
+
 
 window.game_id = -1;
 window.player_id = -1;
@@ -20,11 +22,15 @@ window.player_id = -1;
 
 function App() {
 
+  const [toggle, setToggle] = useState(false);
+
   return (
     <div className="App">
+
+      
         <Router>
           <div className="App">
-              <div className='Router-Header'>
+            {toggle ?<div className='Router-Header'>
                 <ul className = 'Router-List'>
                   <li>
                     <Link to="/">
@@ -43,20 +49,20 @@ function App() {
                     </Link>
                   </li>
                 </ul>
-              </div>
+              </div> : null}
+              <button onClick = {() => setToggle(!toggle)}>Toggle</button>
           </div>
 
           <Routes>
             <Route exact path='/' element={< Home />}></Route>
             <Route exact path='/login' element={<Login/>}></Route>
             <Route exact path='/play' element={<Play/>}></Route>
-            <Route exact path='/game' element={<Game/>}></Route>
+            <Route exact path='/game' element={<Game/>}> </Route>
             <Route path= "*" element = {<ErrorPage/>}/>
           </Routes>
         </Router>
 
-        
-        
+
         
       
     </div>

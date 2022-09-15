@@ -31,6 +31,8 @@ export default function Play (){
       } else {
          navigate("/login");
       }
+
+      
    } 
    async function joinGameHandle() {
       let input = document.getElementById("Join-Game-Input").value;
