@@ -16,6 +16,7 @@ import ErrorPage from "./component/errorpage.js";
 import { useState, useEffect } from "react";
 
 
+
 window.game_id = -1;
 window.player_id = -1;
 
@@ -26,8 +27,6 @@ function App() {
 
   return (
     <div className="App">
-
-      
         <Router>
           <div className="App">
             {toggle ?<div className='Router-Header'>
@@ -62,10 +61,8 @@ function App() {
           </Routes>
         </Router>
 
-
-        
-      
     </div>
+
   );
 }
 
