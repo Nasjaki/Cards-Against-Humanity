@@ -10,7 +10,7 @@ export default async function get_games(game_id = -1) {
             'Content-Type':'application/json',
         }
     })
-    .then(result => result.json())
+    .then(response => response.json())
     .then( json => {
 
         if (game_id !== -1) { 

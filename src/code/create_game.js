@@ -1,7 +1,7 @@
 
 const url = "https://gruppe5.toni-barth.com/";
 
-export default async function create_game(owner_id = window.player_id, packs = 0, goal = 10) {
+export default async function create_game(owner_id = window.player_id, packs = 0, goal = 3) {
 
     if (owner_id < 0) {
         //first login before creating a game
@@ -14,9 +14,9 @@ export default async function create_game(owner_id = window.player_id, packs = 0
                 'Content-Type':'application/json',
             },
             body: JSON.stringify({
-                "owner" : owner_id//,
+                "owner" : owner_id,
                 //"packs" : [packs],
-                //"goal" : goal
+                "goal" : goal
             })
     })
     .then(response => response.json())

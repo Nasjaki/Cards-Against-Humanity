@@ -55,17 +55,19 @@ ul{
   margin-top: 3rem;
 
 }
-.Black-Card {
-  color:black;
+.Black-Card{
+  display: inline-flex;
+  text-align: start;
+  height: 15rem;
+  width: 10rem;
+  padding: 6px;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: none;
+  color: white;
   background-color: black;
-  padding: 10px;
-
-  /*temporarily turned off, must be triggered when in waiting lobby or in game*/
-  display: none;
-
-}
-#black_card {
-  width: 400px;
+  box-shadow: 0rem 0.1rem 0.5rem  rgba(0, 0, 0, 0.6);
+  transition: 300ms;
 }
 
 .Card-Parent {
@@ -82,6 +84,24 @@ ul{
   margin-left: 0.5rem;
   margin-right: 0.5rem;
   display: inline-block;
+}
+
+#Chosen-Card-Button {
+  display: inline-flex;
+  text-align: start;
+  height: 10rem;
+  width: 7rem;
+  padding: 6px;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0rem 0.1rem 0.5rem  rgba(0, 0, 0, 0.6);
+  transition: 300ms;
+
+  color: rgba(255,105,18,0.85);
+  
+  box-shadow:0px 0px 0px 1px rgba(255,105,18,1);
+  
 }
 
 #Choose-Card-Button{
@@ -147,6 +167,8 @@ ul{
   animation: animate-shadow-answer 300ms;
 }
 
+
+
 @keyframes animate-shadow-answer{
   100%{
     box-shadow: 0px 0px 50px 20px rgba(136,47,255,0);
@@ -211,13 +233,10 @@ a{
 }
 
 #Stop-Game-Button{
-
-  margin: auto;
   margin-top: 2rem;
 }
 
 #Leave-Game-Button{
-  margin-left: 3rem;
   margin-top: 2rem;
 }
 
@@ -287,7 +306,7 @@ a{
   box-shadow: inset 0rem 0rem 0rem 0.1rem rgba(136,47,255,1);
 }
 
-/*temporarily turns off unimportant buttons*/
+/*temporarily turns off unimportant buttons
 
 #Debug-User-Button{
   display: none;
@@ -304,6 +323,8 @@ a{
 #Delete-Game-Button{
   display: none;
 }
+
+*/
 
 /*Game Guide popup on frontpage*/
 
@@ -331,6 +352,7 @@ a{
   padding: 0.5rem;
   border-radius: 5px;
   box-sizing: border-box;
+  transition: 300ms;
 }
 
 .Exit-Button{
@@ -363,11 +385,28 @@ a{
 }
 
 #Help-Button{
+  display: block;
   margin-top: 10px;
   padding: 0.5rem;
   border-radius: 30px;
   font-size: 30px;
   font-weight: 600;
   min-width: 1rem;
+}
 
+.Crown{
+  margin-top: 100px;
+  transform: translate(-50%, -50%);
+  animation: animate-rotation 1s linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes animate-rotation {
+  0%{
+    transform: translate(-50%, -50%) rotate(25deg)
+  }
+  100%{
+    transform: translate(-50%, -50%) rotate(-25deg);
+  }
 }
