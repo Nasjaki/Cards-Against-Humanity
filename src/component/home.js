@@ -1,6 +1,6 @@
 
 import React from 'react';
-import Question from '../code/class_question';
+
 
 function togglePopup(){
     document.getElementById("Show-Game-Guide").classList.toggle("active");
@@ -26,7 +26,7 @@ export default function Home (){
 
         </div>
 
-        <Question />
+        
 
         <button className='Game-Buttons' id='Help-Button' onClick={togglePopup}>?</button>
 

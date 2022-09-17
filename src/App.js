@@ -15,6 +15,11 @@ import ErrorPage from "./component/errorpage.js";
 
 import { useState, useEffect } from "react";
 
+//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+//import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+
+import { IoGrid } from "react-icons/io5";
+
 
 
 window.game_id = -1;
@@ -49,7 +54,8 @@ function App() {
                   </li>
                 </ul>
               </div> : null}
-              <button onClick = {() => setToggle(!toggle)}>Toggle</button>
+              <IoGrid onClick = {() => setToggle(!toggle)}/> 
+              
           </div>
 
           <Routes>
@@ -61,7 +67,9 @@ function App() {
           </Routes>
         </Router>
 
+
     </div>
+
 
   );
 }
