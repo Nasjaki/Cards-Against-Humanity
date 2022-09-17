@@ -26,7 +26,7 @@ export default function Home (){
 
         </div>
 
-        {/*<Question />*/}
+        <Question />
 
         <button className='Game-Buttons' id='Help-Button' onClick={togglePopup}>?</button>
 
