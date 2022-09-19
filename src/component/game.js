@@ -73,46 +73,64 @@ export default function Game (){
         })
     }
 
+    //Selected white cards 
+    const[card_selected, set_card_selected] = useState([-1]);
+
+    function card_selected_handle(index) {
+
+        for(var i = 0; i < card_selected.length; i++) {
+            if (card_selected[i] == index) {
+                return i + 1;
+            }
+        }
+
+        return -1;
+        
+    }
+    function set_card_selected_handle(index) {
+
+        //if index not already in array continue 
+        for(var i = 0; i < card_selected.length; i++) {
+            //End function
+            if (card_selected[i] === index) return false;
+        }
+        
+
+        let array_modify = card_selected;
+
+
+        let pos = 0;
+        for(var i = 0; i < selected_allowed - 1; i++) {
+            
+            array_modify[i] = array_modify[i+1];
+            pos++;
+            
+        }
+        
+
+        //The last one is the new one
+        array_modify[pos] = index;
+
+
+        set_card_selected(array_modify);
+
+        
+    }
+
 
     //Answer List
     const[answer_list, set_answer_list] = useState([]);
 
-    const set_answer_list_element = (index, new_element) => {
-        set_answer_list(existing_answers => {
-            return [
-                ...existing_answers.slice(0,index),
-                existing_answers[index] = new_element,
-                ...existing_answers.slice(index + 1)
-            ]
-        })
-    }
-
     async function refresh_answer_list() {
 
-        const answer_arr = await get_answers();
+        let answer_arr = await get_answers();
 
-
-        if (answer_list.length !== answer_arr.length) {
-            
-            //add answers
-            for(var i = 0; i < answer_arr.length; i++) {
-                let answer_array_parts = answer_arr[i];
-                
-                let answer_str = "";
-                for(var i2 = 0; i2 < answer_array_parts.length; i2++) {
-
-                    answer_str += answer_array_parts[i2].text + " ";
-                    
-                }
-
-                answer_str += "\n";
-                
-
-                set_answer_list_element(i, answer_str);
-
-            }
-
+        for(var i = 0; i < answer_arr.length; i++) {
+            answer_arr.id = i;
         }
+
+
+        set_answer_list(answer_arr);
 
     }
 
@@ -133,8 +151,8 @@ export default function Game (){
         
         for(var i = 0; i < cards.length; i++) {
             //dont commit if not valid
-            if (cards[i] == -1 || cards.length < selected_allowed) {
-                console.log(false);
+            if (cards[i] == -1 || cards.length < selected_allowed || cards[i] == undefined) {
+
                 return false;
 
             } 
@@ -145,8 +163,7 @@ export default function Game (){
 
         
         if (await commit_answer(answer_array) === true){
-
-            console.log(answer_array);
+            console.log("ALARM");
 
             //Reset card selected
             set_card_selected([]);
@@ -159,6 +176,7 @@ export default function Game (){
             //disable abillity to commit an answer
             can_commit = false;
         } 
+        console.log("KEIN ALARM");
         
 
     }
@@ -315,59 +333,16 @@ export default function Game (){
             for(var i = 0; i < white_card.length; i++) {
                 set_white_card(i,white_card[i].text);
             }
-        } else if (white_card.length != white_card_list.length){
-            console.log("white card didnt get deleted from list");
-        }
+        } 
         
     }
 
-    //Selected white cards 
-    const[card_selected, set_card_selected] = useState([-1]);
-
-    function card_selected_handle(index) {
-
-        for(var i = 0; i < card_selected.length; i++) {
-            if (card_selected[i] == index) {
-                return i + 1;
-            }
-        }
-
-        return -1;
-        
-    }
-    function set_card_selected_handle(index) {
-
-        //if index not already in array continue 
-        for(var i = 0; i < card_selected.length; i++) {
-            //End function
-            if (card_selected[i] === index) return false;
-        }
-        
-
-        let array_modify = card_selected;
-
-        console.log(array_modify + " before");
-
-        let pos = 0;
-        for(var i = 0; i < selected_allowed - 1; i++) {
-            
-            array_modify[i] = array_modify[i+1];
-            pos++;
-            
-        }
-        
-
-        //The last one is the new one
-        array_modify[pos] = index;
-
-        console.log(array_modify + " after");
-        set_card_selected(array_modify);
-
-        
-    }
+    
 
     //Winner
     async function winner_handle() {
+        console.log(answer_selected);
+
         let answers_test = await get_answers();
 
         
@@ -427,12 +402,18 @@ export default function Game (){
 
         {isCzar === "Czar" ? <div className='Czar-Table'>
             <ul className='Answer-Table'>
-                {answer_list.map((answer_text, index) => {
+                {answer_list.map((white_card) => {
                     return (
                         <div>
-                            <li key = {index}>
+                            <li key = {answer_list.id}>
                                 <div className='Card-Parent'>
-                                    <button id = "Choose-Answer-Button" onClick={() => set_answer_selected(index) }> {answer_text} </button>
+                                    <button id = "Choose-Answer-Button" onClick={() => set_answer_selected(answer_list.id) }> 
+                                        <div className='white_answer_card'>
+                                            {white_card.map((white_card_text) => {
+                                                return ( <div id = "white_answer_list"> {white_card_text.text} </div>  )
+                                            })}
+                                        </div>
+                                    </button>
                                 </div>
                             </li>
                         </div>

@@ -462,3 +462,11 @@ a{
   border: none;
   box-shadow: 0rem 0.1rem 0.5rem rgba(0, 0, 0, 0.6);
 }
+
+#white_answer_list {
+  margin-bottom: 10px;
+}
+
+.white_answer_card {
+  display: block;
+}

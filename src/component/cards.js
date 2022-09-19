@@ -63,6 +63,16 @@ export default function Cards (){
         </div> : null}
         
         {toggle_show_packs == "Cards" ? <div>
+            {black_cards.map((black_card) => {
+                return (
+                    <div>
+                        <li key = {black_card.id}>
+                            <button> {black_card.text} </button>
+                        </li>
+                    </div>
+                )
+            })}
+
             {white_cards.map((white_card) => {
                 return (
                     <div>
@@ -73,16 +83,6 @@ export default function Cards (){
                 )
             })}
 
-            {black_cards.map((black_card) => {
-                return (
-                    <div>
-                        <li key = {black_card.id}>
-                            <button> {black_card.text} </button>
-                        </li>
-                    </div>
-                )
-            })}
-            
        </div> : null}
     </div>
 }

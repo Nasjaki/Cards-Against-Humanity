@@ -31,6 +31,14 @@ function App() {
 
   const [toggle, setToggle] = useState(false);
 
+  function setToggleHandle() {
+
+    if (window.game_id == -1) {
+      setToggle(!toggle);
+    }
+  }
+
+
   return (
     <div className="App">
         <Router>
@@ -60,7 +68,7 @@ function App() {
                   </li>
                 </ul>
               </div> : null}
-              <IoGrid className='ToggleHeader'onClick = {() => setToggle(!toggle || window.player_id != -1)}/>
+              <IoGrid className='ToggleHeader' onClick = {() => setToggleHandle()}/>
               
           </div>
 
@@ -73,7 +81,6 @@ function App() {
             <Route path= "*" element = {<ErrorPage/>}/>
           </Routes>
         </Router>
-
 
     </div>
 
