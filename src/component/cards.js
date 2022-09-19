@@ -55,7 +55,10 @@ export default function Cards (){
                 return (
                     <div>
                         <li key = {pack.id}>
-                            <button onClick={() => white_black_cards_handle(pack.id)}> {pack.name} </button>
+                            <div className='Pack-Container'>
+                                <button onClick={() => white_black_cards_handle(pack.id)}> {pack.name} </button>
+                                <button> Test </button>
+                            </div>
                         </li>
                     </div>
                 )
