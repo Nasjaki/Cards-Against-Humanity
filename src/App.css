@@ -11,7 +11,18 @@ ul{
   list-style-type: none;
   padding: 0px;
 }
+li{
+  list-style: none;
+}
 
+/*turns off link color and decoration*/
+a{
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+}
+/* Header */
 .Router-Header {
   display: flex;
   flex-direction: row;
@@ -22,6 +33,12 @@ ul{
   display:flex;
   flex-direction: row;
 }
+.ToggleHeader{
+  position: absolute;
+  left: 1rem;
+  top: 1.5rem;
+}
+
 .Header-Buttons:hover{
   color: rgb(240, 240, 240);
   transition: 250ms ease;
@@ -39,152 +56,6 @@ ul{
   box-shadow: 0px 0.5rem 1.2rem rgba(0, 0, 0, 0.4);
 
 }
-
-/*Player-Table*/
-
-.Player-Table{
-  background-color: rgba(54, 53, 53, 0.6);
-  border-radius: 8px;
-  margin: auto;
-  width: 30%;
-}
-
-/*Cards*/
-
-.Cards {
-  margin-top: 3rem;
-
-}
-.Black-Card{
-  display: inline-flex;
-  text-align: start;
-  height: 15rem;
-  width: 10rem;
-  padding: 6px;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-  border: none;
-  color: white;
-  background-color: black;
-  box-shadow: 0rem 0.1rem 0.5rem  rgba(0, 0, 0, 0.6);
-  transition: 300ms;
-}
-
-.Card-Parent {
-  position: relative;
-}
-
-.Card-Parent:hover{
-  transition: 250ms ease;
-  transform: matrix(1.1, -0.06, 0.06, 1.1, 0, 0);
-}
-
-.White-Cards-Table li{
-  margin-top: 0px;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-  display: inline-block;
-}
-
-#Chosen-Card-Button {
-  display: inline-flex;
-  text-align: start;
-  height: 10rem;
-  width: 7rem;
-  padding: 6px;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-  border: none;
-  box-shadow: 0rem 0.1rem 0.5rem  rgba(0, 0, 0, 0.6);
-  transition: 300ms;
-
-  color: rgba(255,105,18,0.85);
-  
-  box-shadow:0px 0px 0px 1px rgba(255,105,18,1);
-  
-}
-
-#Choose-Card-Button{
-  display: inline-flex;
-  text-align: start;
-  height: 10rem;
-  width: 7rem;
-  padding: 6px;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-  border: none;
-  box-shadow: 0rem 0.1rem 0.5rem  rgba(0, 0, 0, 0.6);
-  transition: 300ms;
-}
-#Choose-Card-Button:hover{
-  cursor: pointer;
-}
-
-#Choose-Card-Button:focus{
-  color: rgba(255,105,18,0.85);
-  
-  box-shadow:0px 0px 0px 1px rgba(255,105,18,1);
-  animation: animate-shadow-card 300ms;
-}
-
-@keyframes animate-shadow-card{
-  100%{
-    box-shadow: 0px 0px 50px 20px rgba(255,105,18,0);
-  }
-}
-
-#Commit-Answer-Button{
-  margin-top: 2rem;
-}
-
-.Answer-Table li{
-  margin-top: 0px;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-  display: inline-block;
-}
-
-#Choose-Answer-Button{
-  display: inline-flex;
-  text-align: start;
-  height: 10rem;
-  width: 7rem;
-  padding: 6px;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-  border: none;
-  box-shadow: 0rem 0.1rem 0.5rem  rgba(0, 0, 0, 0.6);
-  transition: 300ms;
-}
-#Choose-Answer-Button:hover {
-  cursor: pointer;
-}
-#Choose-Answer-Button:focus{
-
-  color: rgba(136,47,255,0.85);
-
-  box-shadow:0px 0px 0px 1px rgba(136,47,255,1);
-  animation: animate-shadow-answer 300ms;
-}
-
-
-
-@keyframes animate-shadow-answer{
-  100%{
-    box-shadow: 0px 0px 50px 20px rgba(136,47,255,0);
-  }
-
-}
-
-/*turns off link color and decoration*/
-
-a{
-  color: white;
-  text-decoration: none;
-  font-size: 18px;
-  font-weight: 600;
-}
-
 /*Buttons*/
 
 .Game-Buttons{
@@ -225,22 +96,82 @@ a{
   display: block;
 }
 
-/*Buttons in game menu*/
+/*home menu components*/
 
-#Start-Game-Button{
-  margin: auto;
-  margin-top: 2rem;
+/*Game Guide popup on frontpage*/
+
+.Game-Guide .Overlay{
+  position: fixed;
+  top:0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+  display: none;
 }
 
-#Stop-Game-Button{
-  margin-top: 2rem;
+.Game-Guide .Content{
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: white;
+  width: 70vw;
+  height: 60vh;
+  z-index: 2;
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 5px;
+  box-sizing: border-box;
+  transition: 300ms;
 }
 
-#Leave-Game-Button{
-  margin-top: 2rem;
+.Exit-Button{
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: black;
+  color: white;
+  width: 5ex;
+  height: 5ex;
+  line-height: 5ex;
+  text-align: center;
+  border-radius: 50%;
+  transform: scale(0.7);
 }
+
+.Exit-Button:hover{
+  color: #d20816;
+  background-color: rgba(0,0,0,0.85);
+}
+
+.Game-Guide.active .Overlay{
+  display: block;
+}
+
+.Game-Guide.active .Content{
+  transition: all 500ms ease-in-out;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+#Help-Button{
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  display: block;
+  margin-top: 10px;
+  padding: 0.5rem;
+  border-radius: 30px;
+  font-size: 30px;
+  font-weight: 600;
+  min-width: 1rem;
+}
+
 
 /*Buttons in login menu*/
+
 #Create-User-Button{
   margin-top: 15px;
 }
@@ -306,6 +237,187 @@ a{
   box-shadow: inset 0rem 0rem 0rem 0.1rem rgba(136,47,255,1);
 }
 
+/*Buttons in game menu*/
+
+#Start-Game-Button{
+  margin: auto;
+  margin-top: 2rem;
+}
+
+#Stop-Game-Button{
+  margin-top: 2rem;
+}
+
+#Leave-Game-Button{
+  margin-top: 2rem;
+}
+
+#Commit-Answer-Button{
+  margin-top: 2rem;
+}
+
+/*Game menu components*/
+
+/*Player-Table*/
+
+.Player-Table{
+  background-color: rgba(54, 53, 53, 0.6);
+  border-radius: 8px;
+  margin: auto;
+  width: 30%;
+}
+
+/*Cards*/
+
+.Cards {
+  margin-top: 3rem;
+
+}
+
+/*Black Card*/
+.Black-Card{
+  display: inline-flex;
+  text-align: start;
+  height: 15rem;
+  width: 10rem;
+  padding: 6px;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: none;
+  color: white;
+  background-color: black;
+  box-shadow: 0rem 0.1rem 0.5rem  rgba(0, 0, 0, 0.6);
+  transition: 300ms;
+}
+
+.Card-Parent {
+  position: relative;
+}
+
+.Card-Parent:hover{
+  transition: 250ms ease;
+  transform: matrix(1.1, -0.06, 0.06, 1.1, 0, 0);
+}
+
+/*White Card*/
+.White-Cards-Table li{
+  margin-top: 0px;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  display: inline-block;
+}
+
+#Chosen-Card-Button{
+  display: inline-flex;
+  text-align: start;
+  height: 10rem;
+  width: 7rem;
+  padding: 6px;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0rem 0.1rem 0.5rem  rgba(0, 0, 0, 0.6);
+  transition: 300ms;
+
+  color: rgba(255,105,18,0.85);
+
+  box-shadow:0px 0px 0px 1px rgba(255,105,18,1);
+
+}
+
+#Choose-Card-Button{
+  display: inline-flex;
+  text-align: start;
+  height: 10rem;
+  width: 7rem;
+  padding: 6px;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0rem 0.1rem 0.5rem  rgba(0, 0, 0, 0.6);
+  transition: 300ms;
+}
+/*pointer effect when hovering over the white cards*/
+
+#Choose-Card-Button:hover{
+  cursor: pointer;
+}
+
+/*effect when selecting a card*/
+
+#Choose-Card-Button:focus{
+  color: rgba(255,105,18,0.85);
+
+  box-shadow:0px 0px 0px 1px rgba(255,105,18,1);
+  animation: animate-shadow-card 300ms;
+}
+
+@keyframes animate-shadow-card{
+  100%{
+    box-shadow: 0px 0px 50px 20px rgba(255,105,18,0);
+  }
+}
+
+/*Answer*/
+
+.Answer-Table li{
+  margin-top: 0px;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  display: inline-block;
+}
+
+#Choose-Answer-Button{
+  display: inline-flex;
+  text-align: start;
+  height: 10rem;
+  width: 7rem;
+  padding: 6px;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0rem 0.1rem 0.5rem  rgba(0, 0, 0, 0.6);
+  transition: 300ms;
+}
+#Choose-Answer-Button:hover {
+  cursor: pointer;
+}
+/* czar select winning answer effect */
+#Choose-Answer-Button:focus{
+
+  color: rgba(136,47,255,0.85);
+
+  box-shadow:0px 0px 0px 1px rgba(136,47,255,1);
+  animation: animate-shadow-answer 300ms;
+}
+
+@keyframes animate-shadow-answer{
+  100%{
+    box-shadow: 0px 0px 50px 20px rgba(136,47,255,0);
+  }
+
+}
+
+/* Winning/Losing Animation */
+.Crown{
+  margin-top: 100px;
+  transform: translate(-50%, -50%);
+  animation: animate-rotation 1s linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes animate-rotation {
+  0%{
+    transform: translate(-50%, -50%) rotate(25deg)
+  }
+  100%{
+    transform: translate(-50%, -50%) rotate(-25deg);
+  }
+}
+
+
+
 /*temporarily turns off unimportant buttons
 
 #Debug-User-Button{
@@ -326,87 +438,27 @@ a{
 
 */
 
-/*Game Guide popup on frontpage*/
 
-.Game-Guide .Overlay{
-  position: fixed;
-  top:0px;
-  left: 0px;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1;
-  display: none;
+
+
+
+/*Card Packs*/
+
+.Card-Packs-Table{
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  display: inline-flex;
 }
 
-.Game-Guide .Content{
-  position: absolute;
-  top:50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  background: white;
-  width: 70vw;
-  height: 60vh;
-  z-index: 2;
-  text-align: center;
-  padding: 0.5rem;
-  border-radius: 5px;
-  box-sizing: border-box;
-  transition: 300ms;
-}
-
-.Exit-Button{
-  cursor: pointer;
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  background: black;
-  color: white;
-  width: 5ex;
-  height: 5ex;
-  line-height: 5ex;
-  text-align: center;
-  border-radius: 50%;
-  transform: scale(0.7);
-}
-
-.Exit-Button:hover{
-  color: #d20816;
-  background-color: rgba(0,0,0,0.85);
-}
-
-.Game-Guide.active .Overlay{
-  display: block;
-}
-
-.Game-Guide.active .Content{
-  transition: all 500ms ease-in-out;
-  transform: translate(-50%, -50%) scale(1);
-}
-
-#Help-Button{
-  display: block;
-  margin-top: 10px;
-  padding: 0.5rem;
-  border-radius: 30px;
-  font-size: 30px;
-  font-weight: 600;
-  min-width: 1rem;
-}
-
-.Crown{
-  margin-top: 100px;
-  transform: translate(-50%, -50%);
-  animation: animate-rotation 1s linear;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-}
-
-@keyframes animate-rotation {
-  0%{
-    transform: translate(-50%, -50%) rotate(25deg)
-  }
-  100%{
-    transform: translate(-50%, -50%) rotate(-25deg);
-  }
+#Card-Packs-Button{
+  display:inline-flex;
+  text-align: start;
+  height: 10rem;
+  width: 7rem;
+  padding: 6px;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0rem 0.1rem 0.5rem rgba(0, 0, 0, 0.6);
 }

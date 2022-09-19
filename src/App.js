@@ -60,7 +60,7 @@ function App() {
                   </li>
                 </ul>
               </div> : null}
-              <IoGrid onClick = {() => setToggle(!toggle || window.player_id != -1)}/> 
+              <IoGrid className='ToggleHeader'onClick = {() => setToggle(!toggle || window.player_id != -1)}/>
               
           </div>
 

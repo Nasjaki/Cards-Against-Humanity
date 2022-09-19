@@ -53,12 +53,9 @@ export default function Cards (){
         {toggle_show_packs == "Packs" ? <div>
             {packs.map((pack) => {
                 return (
-                    <div>
+                    <div className='Card-Packs-Table'>
                         <li key = {pack.id}>
-                            <div className='Pack-Container'>
-                                <button onClick={() => white_black_cards_handle(pack.id)}> {pack.name} </button>
-                                <button> Test </button>
-                            </div>
+                            <button id='Card-Packs-Button' onClick={() => white_black_cards_handle(pack.id)}> {pack.name} </button>
                         </li>
                     </div>
                 )
