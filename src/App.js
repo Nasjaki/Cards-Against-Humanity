@@ -12,6 +12,7 @@ import Play from "./component/play.js";
 import Home from "./component/home.js";
 import Game from "./component/game.js";
 import ErrorPage from "./component/errorpage.js";
+import Cards from "./component/cards.js";
 
 import { useState, useEffect } from "react";
 
@@ -52,9 +53,14 @@ function App() {
                       <button className='Header-Buttons'> Play </button>
                     </Link>
                   </li>
+                  <li>
+                    <Link to="/cards">
+                      <button className='Header-Buttons'> Cards </button>
+                    </Link>
+                  </li>
                 </ul>
               </div> : null}
-              <IoGrid onClick = {() => setToggle(!toggle)}/> 
+              <IoGrid onClick = {() => setToggle(!toggle || window.player_id != -1)}/> 
               
           </div>
 
@@ -63,6 +69,7 @@ function App() {
             <Route exact path='/login' element={<Login/>}></Route>
             <Route exact path='/play' element={<Play/>}></Route>
             <Route exact path='/game' element={<Game/>}> </Route>
+            <Route exact path='/cards' element={<Cards/>}> </Route>
             <Route path= "*" element = {<ErrorPage/>}/>
           </Routes>
         </Router>

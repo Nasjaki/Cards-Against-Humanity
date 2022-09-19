@@ -5,6 +5,12 @@ export default async function commit_answer(white_cards, game_id = window.game_i
 
     if (white_cards.length === 0) return false;
 
+    for(var i = 0; i < white_cards.length; i++) {
+        if (white_cards[i] == undefined) return false;
+    }
+
+    console.log(white_cards);
+
     return await fetch(url + "games/" + game_id + "/cards/" + player_id, { 
         method: 'PUT',
         headers: {

@@ -104,6 +104,8 @@ export default function Game (){
                     answer_str += answer_array_parts[i2].text + " ";
                     
                 }
+
+                answer_str += "\n";
                 
 
                 set_answer_list_element(i, answer_str);
@@ -130,6 +132,13 @@ export default function Game (){
 
         
         for(var i = 0; i < cards.length; i++) {
+            //dont commit if not valid
+            if (cards[i] == -1 || cards.length < selected_allowed) {
+                console.log(false);
+                return false;
+
+            } 
+
             answer_array[pos] = white_card[cards[i]].id;
             pos++;
         }
@@ -175,6 +184,9 @@ export default function Game (){
 
             //only in game active possible
             if (game_stats.running == true) {
+                //Hide crown
+                set_winner("none");
+
                 //Display active
                 setGameActive("Aktiv");
 
@@ -216,20 +228,25 @@ export default function Game (){
 
             } else {
                 //Display not active
-                setGameActive();
+                setGameActive("");
 
                 setIsCzar("");
                 black_card = "";
 
+                
 
-                /*
-                    let winner_id = game_stats.winner.id;
-                    if (winner_id !== 0) {
+                
+                let winner_stats = game_stats.winner;
+                
+                if(winner_stats != undefined) {
+                    let winner_id = winner_stats.id;
+                    if (winner_id !== -1) {
                         (winner_id === window.player_id) ? set_winner("winner") : set_winner("loser");
+
                     } else {
                         set_winner("none");
                     }
-                */
+                }
 
                 score_arr = [];
 
@@ -250,7 +267,7 @@ export default function Game (){
         if (player_arr.length !== player_list.length) {
 
             for(var i = 0; i < player_arr.length; i++) {
-                set_list_element(i, player_arr[i].name + " " + player_arr[i].id);
+                set_list_element(i, player_arr[i].name + "_" + player_arr[i].id);
             }
             if (player_arr.length < player_list.length) delete_list_element_end(); 
         }
@@ -311,15 +328,14 @@ export default function Game (){
 
         for(var i = 0; i < card_selected.length; i++) {
             if (card_selected[i] == index) {
-                return index;
+                return i + 1;
             }
         }
 
-        return 0;
+        return -1;
         
     }
     function set_card_selected_handle(index) {
-
 
         //if index not already in array continue 
         for(var i = 0; i < card_selected.length; i++) {
@@ -330,17 +346,24 @@ export default function Game (){
 
         let array_modify = card_selected;
 
+        console.log(array_modify + " before");
 
         let pos = 0;
         for(var i = 0; i < selected_allowed - 1; i++) {
-            if (array_modify.length > i) {
-                array_modify[i] = array_modify[i+1];
-                pos++;
-            }
+            
+            array_modify[i] = array_modify[i+1];
+            pos++;
+            
         }
+        
+
+        //The last one is the new one
         array_modify[pos] = index;
+
+        console.log(array_modify + " after");
         set_card_selected(array_modify);
 
+        
     }
 
     //Winner
@@ -388,7 +411,7 @@ export default function Game (){
                         return (
                             <li key = {index}>
                                 <div className='Card-Parent'>
-                                    {card_selected_handle(index) > 0 ? <button id = "Chosen-Card-Button" onClick={() => set_card_selected_handle(index)} > {card_text} </button> : 
+                                    {card_selected_handle(index) > -1 ? <button id = "Chosen-Card-Button" onClick={() => set_card_selected_handle(index)} > {card_text} <br></br> {card_selected_handle(index)} </button> : 
                                     <button id = "Choose-Card-Button" onClick={() => set_card_selected_handle(index)} > {card_text} </button> }
                                 </div>
 
