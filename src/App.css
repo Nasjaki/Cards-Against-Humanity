@@ -35,9 +35,32 @@ a{
 }
 .ToggleHeader{
   position: absolute;
+  width: 25px;
+  height: 25px;
   left: 1rem;
   top: 1.5rem;
+  cursor:pointer;
+  transition: 1s;
+  color: rgb(102, 0, 255);
+  animation: animate 8s linear infinite;
 }
+@keyframes animate {
+  0%{
+    filter: contrast(20%);
+  }
+  50%{
+    filter: contrast(80%);
+  }
+  100%{
+    filter: contrast(20%);
+  }
+}
+
+.ToggleHeader:hover {
+  transform: rotate(180deg) translateZ(0);
+}
+
+
 
 .Header-Buttons:hover{
   color: rgb(240, 240, 240);
@@ -256,6 +279,10 @@ a{
   margin-top: 2rem;
 }
 
+#Select-Winner-Button{
+  margin-top: 1rem;
+}
+
 /*Game menu components*/
 
 /*Player-Table*/
@@ -264,6 +291,7 @@ a{
   background-color: rgba(54, 53, 53, 0.6);
   border-radius: 8px;
   margin: auto;
+  margin-top: 20px;
   width: 30%;
 }
 
@@ -399,9 +427,16 @@ a{
 }
 
 /* Winning/Losing Animation */
+.Crown-Container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 .Crown{
-  margin-top: 100px;
-  transform: translate(-50%, -50%);
+
+  margin-top: 50px;
   animation: animate-rotation 1s linear;
   animation-iteration-count: infinite;
   animation-direction: alternate;
@@ -409,15 +444,98 @@ a{
 
 @keyframes animate-rotation {
   0%{
-    transform: translate(-50%, -50%) rotate(25deg)
+    transform:  rotate(25deg)
   }
   100%{
-    transform: translate(-50%, -50%) rotate(-25deg);
+    transform:  rotate(-25deg);
   }
 }
 
+/* Card packs menu */
 
+.Card-Packs-Table{
+  z-index: 1;
+  margin-top: 0.7rem;
+  margin-bottom: 0.7rem;
+  margin-left: 0.7rem;
+  margin-right: 0.5rem;
+  display: inline-flex;
+  position: relative;
+}
 
+.Card-Packs-Button{
+  display:inline-flex;
+  text-align: start;
+  height: 10rem;
+  width: 7rem;
+  padding: 6px;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0rem 0.1rem 0.5rem rgba(0, 0, 0, 0.6);
+}
+
+.Card-Packs-Button:hover{
+  cursor: pointer;
+}
+
+.Card-Packs-Button:hover + #Pack-1{
+  transition: 400ms;
+  background-color: black;
+  transform: translatey(-20px);
+}
+
+.White-Card-Pack{
+  display:inline-flex;
+  text-align: start;
+  height: 10rem;
+  width: 7rem;
+  padding: 6px;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0rem 0.1rem 0.5rem rgba(0, 0, 0, 0.6);
+}
+
+.Black-Card-Pack{
+  display:inline-flex;
+  text-align: start;
+  height: 10rem;
+  width: 7rem;
+  padding: 6px;
+  background-color: black;
+  color:white;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0rem 0.1rem 0.5rem rgba(0, 0, 0, 0.6);
+}
+
+#Toggle-Packs-Button{
+  margin-top: 50px;
+  margin-bottom: 10px;
+}
+
+#Pack-1{
+  z-index: -1;
+  position: absolute;
+  top:3px;
+  left: 5px;
+  transform: rotate(2deg);
+  background-color: #E1E1E1FF;
+}
+#Pack-2{
+  z-index: -2;
+  position: absolute;
+  top:6px;
+  left: 10px;
+  transform: rotate(2deg);
+  background-color: #D0CDCDFF;
+}
+
+.Pack-1:hover{
+  cursor: pointer;
+}
 /*temporarily turns off unimportant buttons
 
 #Debug-User-Button{
@@ -437,36 +555,3 @@ a{
 }
 
 */
-
-
-
-
-
-/*Card Packs*/
-
-.Card-Packs-Table{
-  margin-top: 0.5rem;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-  display: inline-flex;
-}
-
-#Card-Packs-Button{
-  display:inline-flex;
-  text-align: start;
-  height: 10rem;
-  width: 7rem;
-  padding: 6px;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-  border: none;
-  box-shadow: 0rem 0.1rem 0.5rem rgba(0, 0, 0, 0.6);
-}
-
-#white_answer_list {
-  margin-bottom: 10px;
-}
-
-.white_answer_card {
-  display: block;
-}

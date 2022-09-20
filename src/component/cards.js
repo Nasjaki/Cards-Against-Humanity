@@ -48,14 +48,16 @@ export default function Cards (){
 
         
 
-        <button onClick={() => show_packs_handle()}> Packs </button>
+        <button className='Game-Buttons Button-Block' id="Toggle-Packs-Button" onClick={() => show_packs_handle()}> Packs </button>
 
         {toggle_show_packs == "Packs" ? <div>
             {packs.map((pack) => {
                 return (
                     <div className='Card-Packs-Table'>
                         <li key = {pack.id}>
-                            <button id='Card-Packs-Button' onClick={() => white_black_cards_handle(pack.id)}> {pack.name} </button>
+                        <button className='Card-Packs-Button' onClick={() => white_black_cards_handle(pack.id)}> {pack.name} </button>
+                            <button className='Card-Packs-Button ' id='Pack-1'></button>
+                            <button className='Card-Packs-Button' id='Pack-2'></button>
                         </li>
                     </div>
                 )
@@ -65,9 +67,9 @@ export default function Cards (){
         {toggle_show_packs == "Cards" ? <div>
             {black_cards.map((black_card) => {
                 return (
-                    <div>
+                    <div className='Card-Packs-Table'>
                         <li key = {black_card.id}>
-                            <button> {black_card.text} </button>
+                            <button className='Black-Card-Pack'> {black_card.text} </button>
                         </li>
                     </div>
                 )
@@ -75,9 +77,9 @@ export default function Cards (){
 
             {white_cards.map((white_card) => {
                 return (
-                    <div>
+                    <div className='Card-Packs-Table'>
                         <li key = {white_card.id}>
-                            <button> {white_card.text} </button>
+                            <button className='White-Card-Pack'> {white_card.text} </button>
                         </li>
                     </div>
                 )
