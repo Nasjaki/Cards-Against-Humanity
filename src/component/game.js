@@ -282,6 +282,7 @@ export default function Game (){
 
     async function refresh_player_list(player_arr) {
 
+        if (player_arr == undefined || player_list == undefined) return false;
 
         if (player_arr.length !== player_list.length) {
 

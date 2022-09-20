@@ -21,6 +21,7 @@ import { useState, useEffect } from "react";
 //import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 
 import { IoGrid } from "react-icons/io5";
+import game_leave from './code/game_leave';
 
 
 
@@ -40,7 +41,12 @@ function App() {
 
   }
 
-
+  async function leave_game_handle() {
+    if (window.game_id != -1) {
+      game_leave();
+    }
+   
+  }
 
   return (
     <div className="App">
@@ -50,25 +56,26 @@ function App() {
                 <ul className = 'Router-List'>
                   <li>
                     <Link to="/">
-                      <button className='Header-Buttons'> Home </button>
+                      <button className='Header-Buttons' onClick={() => leave_game_handle()}> Home </button>
                     </Link>
                   </li>
                   <li>
                     <Link to="/login">
-                      <button className='Header-Buttons'> Login </button>
+                      <button className='Header-Buttons' onClick={() => leave_game_handle()}> Login </button>
                     </Link>
                     
                   </li>
                   <li>
                     <Link to="/play">
-                      <button className='Header-Buttons'> Play </button>
+                      <button className='Header-Buttons' onClick={() => leave_game_handle()}> Play </button>
                     </Link>
                   </li>
                   <li>
                     <Link to="/cards">
-                      <button className='Header-Buttons'> Cards </button>
+                      <button className='Header-Buttons' onClick={() => leave_game_handle()}> Cards </button>
                     </Link>
                   </li>
+
                 </ul>
               </div> : null}
               <IoGrid className='ToggleHeader' onClick = {() => setToggleHandle()}/>
@@ -79,7 +86,7 @@ function App() {
             <Route exact path='/' element={< Home />}></Route>
             <Route exact path='/login' element={<Login/>}></Route>
             <Route exact path='/play' element={<Play/>}></Route>
-            <Route exact path='/game' element={<Game/>}> </Route>
+            <Route exact path='/game' element={<Game/>} > </Route>
             <Route exact path='/cards' element={<Cards/>}> </Route>
             <Route path= "*" element = {<ErrorPage/>}/>
           </Routes>
