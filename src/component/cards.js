@@ -41,6 +41,8 @@ export default function Cards (){
         set_white_cards(white_arr);
         set_black_cards(black_arr);
 
+        
+
     }
 
     return <div>
@@ -54,7 +56,7 @@ export default function Cards (){
             {packs.map((pack) => {
                 return (
                     <div className='Card-Packs-Table'>
-                        <li key = {pack.id}>
+                        <li key = {pack.toString()}>
                         <button className='Card-Packs-Button' onClick={() => white_black_cards_handle(pack.id)}> {pack.name} </button>
                             <button className='Card-Packs-Button ' id='Pack-1'></button>
                             <button className='Card-Packs-Button' id='Pack-2'></button>
