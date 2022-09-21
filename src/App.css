@@ -56,7 +56,7 @@ a{
   }
 }
 
-.ToggleHeader:hover {
+.ToggleHeader:hover{
   transform: rotate(180deg) translateZ(0);
 }
 
@@ -292,7 +292,7 @@ a{
   border-radius: 8px;
   margin: auto;
   margin-top: 20px;
-  width: 30%;
+  width: 20%;
 }
 
 /*Cards*/
@@ -536,6 +536,49 @@ a{
 .Pack-1:hover{
   cursor: pointer;
 }
+
+/*responsive elements for smartphone version*/
+
+@media screen and (max-width: 400px) and (orientation: portrait){
+  .Header-Buttons{
+    padding: 10px 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  .ToggleHeader{
+    left: 0.5rem;
+    top: 1.25rem;
+  }
+  #Stop-Game-Button{
+    margin-top: 0.5rem;
+  }
+  #Start-Game-Button{
+    margin-top: 0.5rem;
+  }
+  #Leave-Game-Button{
+    margin-top: 1rem;
+  }
+  .Cards{
+    margin-top: 2rem;
+  }
+  .Black-Card{
+    height: 12rem;
+    width: 8rem;
+  }
+  .White-Cards-Table{
+    max-height: 300px;
+    overflow: scroll;
+  }
+  .Player-Table{
+    width: 50%;
+    overflow: scroll;
+  }
+  .Answer-Table{
+
+  }
+}
+
+
 /*temporarily turns off unimportant buttons
 
 #Debug-User-Button{

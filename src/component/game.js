@@ -388,7 +388,7 @@ export default function Game (){
                         return (
                             <li key = {index}>
                                 <div className='Card-Parent'>
-                                    {card_selected_handle(index) > -1 ? <button id = "Chosen-Card-Button" onClick={() => set_card_selected_handle(index)} > {card_text} <br></br> {card_selected_handle(index)} </button> : 
+                                    {card_selected_handle(index.toString()) > -1 ? <button id = "Chosen-Card-Button" onClick={() => set_card_selected_handle(index)} > {card_text} <br></br> {card_selected_handle(index)} </button> : 
                                     <button id = "Choose-Card-Button" onClick={() => set_card_selected_handle(index)} > {card_text} </button> }
                                 </div>
 
@@ -407,7 +407,7 @@ export default function Game (){
                 {answer_list.map((white_card) => {
                     return (
                         <div>
-                            <li key = {answer_list.id}>
+                            <li key = {answer_list.id.toString()}>
                                 <div className='Card-Parent'>
                                     <button id = "Choose-Answer-Button" onClick={() => set_answer_selected(answer_list.id) }> 
                                         <div className='white_answer_card'>
@@ -447,7 +447,7 @@ export default function Game (){
         <ul className='Player-Table'>
             {player_list.map((player_name, index) => {
                 return (
-                    <li key = {index}>
+                    <li key = {index.toString()}>
                         <span>{player_name}</span> <span> {score_arr[index]}</span>
                     </li>
                     

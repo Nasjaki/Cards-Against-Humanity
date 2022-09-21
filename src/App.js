@@ -35,6 +35,14 @@ function App() {
 
   function setToggleHandle() {
 
+    if (document.getElementById("IoGrid").classList.contains(false)) {
+      document.getElementById("IoGrid").classList.remove(false);
+      document.getElementById("IoGrid").classList.add(true);
+    }else{
+      document.getElementById("IoGrid").classList.remove(true);
+      document.getElementById("IoGrid").classList.add(false);
+    }
+
     if (window.game_id == -1) {
       setToggle(!toggle);
     }
@@ -78,7 +86,8 @@ function App() {
 
                 </ul>
               </div> : null}
-              <IoGrid className='ToggleHeader' onClick = {() => setToggleHandle()}/>
+
+              <IoGrid id = 'IoGrid' className='ToggleHeader' onClick = {() => setToggleHandle()}/>
               
           </div>
 

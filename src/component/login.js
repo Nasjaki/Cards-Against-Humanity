@@ -40,7 +40,7 @@ export default function Login () {
 
     return <div>
         <h1>Login</h1>
-        <input className='Game-Buttons Button-Block' id = "Name-Input" placeholder='Name'></input>
+        <input className='Game-Buttons Button-Block' id = "Name-Input" placeholder='Name' maxLength="12"></input>
             
             
             <button className='Game-Buttons Button-Block' id = "Create-User-Button" onClick={newPlayerHandle}> {(player_name === "") ? "Create User" : player_name} </button> 
