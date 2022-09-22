@@ -1,7 +1,8 @@
 import get_players from "./get_players";
 
-
 const url = "https://gruppe5.toni-barth.com/";
+
+//Delete all players -> Debug function only
 
 export default async function delete_player(id = -1) {
 

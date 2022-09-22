@@ -1,8 +1,11 @@
 
 const url = "https://gruppe5.toni-barth.com/";
 
+//Get the infos of the currrent game or of any given game_id
+                                        //With the type of the information
 export default async function get_game_info(type, game_id = window.game_id) {
 
+    //Fetch request for the game data
     return await fetch(url + "games/" + game_id, {    
         method: 'GET',
         headers: {
@@ -13,6 +16,7 @@ export default async function get_game_info(type, game_id = window.game_id) {
     .then(json => {
 
         let info = "";
+        //Switch what the player needs as information
         switch(type){
             case("General"):
                 info = json;

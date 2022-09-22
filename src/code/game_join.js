@@ -1,14 +1,15 @@
 import game_active from "./game_active";
 
-
 const url = "https://gruppe5.toni-barth.com/";
+
+//Lets a player join a given game_id
 
 export default async function game_join(game_id, player_id = window.player_id) {
 
-    //Go to login
+    //Go to login if player isnt logged in
     if (player_id === -1) {return "Login"}
 
-    //Game not active
+    //Game not active return error
     if (await game_active(game_id)) return "Error";
     
     return await fetch(url + "games/" + game_id + "/" + player_id, {

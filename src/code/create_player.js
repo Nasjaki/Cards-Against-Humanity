@@ -1,9 +1,10 @@
 
 const url = "https://gruppe5.toni-barth.com/";
 
+//Fetch function to create a new player with the name as string
+
 export default async function create_player(name_str) {
 
-    //Fetch Funktion um Namen auf URL hochzuladen
     return await fetch(url + "players/", {
             
         method: 'POST',
@@ -16,6 +17,7 @@ export default async function create_player(name_str) {
     })
     .then(response => response.json())
     .then(json => {
+        //set local player id to the id given by the server
         window.player_id = json.id;
         return true;
     })
