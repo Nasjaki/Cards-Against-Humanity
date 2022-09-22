@@ -384,9 +384,9 @@ export default function Game (){
                 <ul className='White-Cards-Table'>
                     {white_card_list.map((card_text, index) => {
                         return (
-                            <li key = {index}>
+                            <li key = {index.toString()}>
                                 <div className='Card-Parent'>
-                                    {card_selected_handle(index.toString()) > -1 ? <button id = "Chosen-Card-Button" onClick={() => set_card_selected_handle(index)} > {card_text} <br></br> {card_selected_handle(index)} </button> : 
+                                    {card_selected_handle(index) > -1 ? <button id = "Chosen-Card-Button" onClick={() => set_card_selected_handle(index)} > {card_text} <br></br> {card_selected_handle(index)} </button> : 
                                     <button id = "Choose-Card-Button" onClick={() => set_card_selected_handle(index)} > {card_text} </button> }
                                 </div>
 
@@ -408,8 +408,8 @@ export default function Game (){
                                 <div className='Card-Parent'>
                                     <button id = "Choose-Answer-Button" onClick={() => set_answer_selected(index) }> 
                                         <div className='white_answer_card'>
-                                            {white_card.map((white_card_text) => {
-                                                return ( <div id = "white_answer_list"> {white_card_text.text} </div>  )
+                                            {white_card.map((white_card_text, index) => {
+                                                return ( <div key = {index} id = "white_answer_list"> {white_card_text.text} </div>  )
                                             })}
                                         </div>
                                     </button>
