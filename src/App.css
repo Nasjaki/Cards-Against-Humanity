@@ -633,13 +633,15 @@ a{
   }
 
   .Black-Card{
-    margin-left: 2rem;
+    position: absolute;
+    left: 2rem;
     height: 12rem;
     width: 8rem;
     overflow: scroll;
   }
 
   .White-Cards-Table{
+    margin-left: 10rem;
     max-width: 550px;
     max-height: 200px;
     overflow: scroll;
@@ -653,6 +655,9 @@ a{
     padding: 16px 24px;
   }
 
+  .Czar-Table{
+    margin-left: 10rem;
+  }
 
   .Player-Table{
     text-align: start;
@@ -697,7 +702,7 @@ a{
 
 }
 
-@media screen and (min-width: 1000px) and (max-width: 1370px) and (orientation: landscape){
+@media screen and (min-width: 1000px) and (max-width: 1250px) and (orientation: landscape){
 
   .Game-Buttons-Alternate{
     display:inline-flex;
@@ -731,14 +736,15 @@ a{
   }
 
   .Black-Card{
-    margin-left: 2rem;
+    position: absolute;
+    left: 2rem;
     min-height: 15rem;
     min-width: 10rem;
     overflow: scroll;
   }
 
   .White-Cards-Table{
-    margin-left: 10px;
+    margin-left: 10rem;
     margin-right: 10px;
     max-width: 700px;
     max-height: 400px;
@@ -753,6 +759,9 @@ a{
     max-height: 400px;
     overflow: scroll;
     padding: 16px 24px;
+  }
+  .Czar-Table{
+    margin-left: 10rem;
   }
 
   .Player-Table{
@@ -771,7 +780,9 @@ a{
 }
 
 
-
+.Home-Body {
+  min-height: 90vh;
+}
 
 
 
@@ -795,9 +806,8 @@ a{
 
 
 .footer_container{
-  display: flex;
-  justify-content: center;
+  text-align: center;
   background-color: rgba(26, 24, 37, 70%);
   color:rgb(240, 240, 240);
-  bottom: 0;
+  padding: 20px;
 }

@@ -121,19 +121,24 @@ export default function Game (){
 
     //Answer List
     const[answer_list, set_answer_list] = useState([]);
-    const[id_list, set_id_list] = useState([]);
 
     async function refresh_answer_list() {
 
         let answer_arr = await get_answers();
 
-        let temp_arr = [];
-        for(var i = 0; i < answer_arr.length; i++) {
-            temp_arr[i] = i;
-        }
-        set_id_list(temp_arr);
+        let compiled_answer = [];
 
-        set_answer_list(answer_arr);
+        for(var i = 0; i < answer_arr.length; i++) {
+            let answer_str = "";
+  
+            for(var i2 = 0; i2 < answer_arr[i].length; i2++) {
+                answer_str += answer_arr[i][i2].text + "\n";
+            }
+            compiled_answer[i] = answer_str;
+
+        }
+
+        set_answer_list(compiled_answer);
 
     }
 
@@ -168,10 +173,6 @@ export default function Game (){
             //Reset card selected
             set_card_selected([]);
             set_answer_selected([]);
-
-            for(var i = 0; i < cards.length; i++) {
-                delete_white_card(i);
-            }
 
             //disable abillity to commit an answer
             can_commit = false;
@@ -224,14 +225,15 @@ export default function Game (){
                     setIsCzar("Czar");
                     
                     //all 4 secs
-                    if (count % 2 == 0) await refresh_answer_list();
+                    if (count % 2 == 0 && answer_list.length == 0) await refresh_answer_list();
+
 
                 } else {
                     setIsCzar("Player");
 
                     
                     //set white cards array
-                    refresh_white_cards();
+                    if (count % 2 == 0) await refresh_white_cards();
                     
                     //get how many cards can be selected
                     selected_allowed = await get_game_info("BlackCard");
@@ -308,40 +310,17 @@ export default function Game (){
     //white cards 
     const[white_card_list, set_white_card_list] = useState([]);
     
-
-    //set white card
-    const set_white_card = (index, new_card) => {
-        set_white_card_list(existing_cards => {
-            return [
-                ...existing_cards.slice(0,index),
-                existing_cards[index] = new_card,
-                ...existing_cards.slice(index + 1)
-            ]
-        })
-    }
-
-    const delete_white_card = (index) => {
-        set_white_card_list(existing_cards => {
-            return existing_cards.slice(0, index);
-        })
-    }
-
     async function refresh_white_cards() {
-        white_card = await get_white_cards();
-        
-        if (white_card.length > white_card_list.length) {
-            for(var i = 0; i < white_card.length; i++) {
-                set_white_card(i,white_card[i].text);
-            }
-        } 
-        
+        const white_card_arr = await get_white_cards();
+
+        set_white_card_list(white_card_arr);
+
     }
 
     
 
     //Winner
     async function winner_handle() {
-        console.log(answer_selected);
 
         let answers_test = await get_answers();
 
@@ -382,14 +361,14 @@ export default function Game (){
 
             {isCzar === "Player"  ? <div className='White-Cards-Map'>
                 <ul className='White-Cards-Table'>
-                    {white_card_list.map((card_text, index) => {
+                    {white_card_list.map((white_card,index) => {
                         return (
                             <li key = {index.toString()}>
                                 <div className='Card-Parent'>
-                                    {card_selected_handle(index) > -1 ? <button id = "Chosen-Card-Button" onClick={() => set_card_selected_handle(index)} > {card_text} <br></br> {card_selected_handle(index)} </button> : 
-                                    <button id = "Choose-Card-Button" onClick={() => set_card_selected_handle(index)} > {card_text} </button> }
+                                    {card_selected_handle(index) > -1 ? <button id = "Chosen-Card-Button" onClick={() => set_card_selected_handle(index)} > {white_card.text} <br></br> {card_selected_handle(index)} </button> : 
+                                    <button id = "Choose-Card-Button" onClick={() => set_card_selected_handle(index)} > {white_card.text} </button> }
                                 </div>
-
+ 
                             </li>
                         )
                     })}
@@ -408,9 +387,7 @@ export default function Game (){
                                 <div className='Card-Parent'>
                                     <button id = "Choose-Answer-Button" onClick={() => set_answer_selected(index) }> 
                                         <div className='white_answer_card'>
-                                            {white_card.map((white_card_text, index) => {
-                                                return ( <div key = {index} id = "white_answer_list"> {white_card_text.text} </div>  )
-                                            })}
+                                            <div id = "white_answer_list"> <p>{white_card}</p> </div> 
                                         </div>
                                     </button>
                                 </div>

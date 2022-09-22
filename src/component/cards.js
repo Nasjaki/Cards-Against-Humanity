@@ -53,10 +53,10 @@ export default function Cards (){
         <button className='Game-Buttons Button-Block' id="Toggle-Packs-Button" onClick={() => show_packs_handle()}> Packs </button>
 
         {toggle_show_packs == "Packs" ? <div className='Card-Packs-Table'>
-            {packs.map((pack) => {
+            {packs.map((pack, index) => {
                 return (
                     <div className='Card-Packs'>
-                        <li key = {pack.id.toString()}>
+                        <li key = {index}>
                         <button className='Card-Packs-Button' onClick={() => white_black_cards_handle(pack.id)}> {pack.name} </button>
                             <button className='Card-Packs-Button ' id='Pack-1'></button>
                             <button className='Card-Packs-Button' id='Pack-2'></button>
