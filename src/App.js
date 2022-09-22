@@ -62,7 +62,7 @@ function App() {
             {toggle ?<div className='Router-Header'>
                 <ul className = 'Router-List'>
                   <li>
-                    <Link to="/">
+                    <Link to="Cards-Against-Humanity/">
                       <button className='Header-Buttons' onClick={() => leave_game_handle()}> Home </button>
                     </Link>
                   </li>
@@ -91,7 +91,7 @@ function App() {
           </div>
 
           <Routes>
-            <Route exact path='/' element={< Home />}></Route>
+            <Route exact path='Cards-Against-Humanity/' element={< Home />}></Route>
             <Route exact path='/login' element={<Login/>}></Route>
             <Route exact path='/play' element={<Play/>}></Route>
             <Route exact path='/game' element={<Game/>} > </Route>
