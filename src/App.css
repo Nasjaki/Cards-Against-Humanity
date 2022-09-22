@@ -780,12 +780,6 @@ a{
 }
 
 
-.Home-Body {
-  min-height: 90vh;
-}
-
-
-
 /*
 #Debug-User-Button{
   display: none;
@@ -804,10 +798,6 @@ a{
 }
 */
 
-
-.footer_container{
-  text-align: center;
-  background-color: rgba(26, 24, 37, 70%);
-  color:rgb(240, 240, 240);
-  padding: 20px;
+.Home-Body {
+  min-height: 90vh;
 }

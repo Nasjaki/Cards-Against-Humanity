@@ -156,18 +156,13 @@ export default function Game (){
         let answer_array = [];
         let pos = 0;
 
-        
-        for(var i = 0; i < cards.length; i++) {
-            //dont commit if not valid
-            if (cards[i] == -1 || cards.length < selected_allowed || cards[i] == undefined) {
-                return false;
-            } 
 
-            answer_array[pos] = white_card[cards[i]].id;
+        for(var i = 0; i < cards.length; i++) {
+            //#nofilter
+            answer_array[pos] = white_card_list[cards[i]].id;
             pos++;
         }
 
-        
         if (await commit_answer(answer_array) === true){
 
             //Reset card selected
@@ -387,7 +382,7 @@ export default function Game (){
                                 <div className='Card-Parent'>
                                     <button id = "Choose-Answer-Button" onClick={() => set_answer_selected(index) }> 
                                         <div className='white_answer_card'>
-                                            <div id = "white_answer_list"> <p>{white_card}</p> </div> 
+                                            <div id = "white_answer_list"> {white_card} </div> 
                                         </div>
                                     </button>
                                 </div>
