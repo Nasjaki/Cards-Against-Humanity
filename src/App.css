@@ -33,6 +33,7 @@ a{
   display:flex;
   flex-direction: row;
 }
+/*button that toggles the header to save space*/
 .ToggleHeader {
   position: absolute;
   width: 25px;
@@ -43,6 +44,7 @@ a{
   transition: 1s;
   color: rgb(19, 2, 45);
 }
+
 #IoGrid{
   transition: 500ms;
 }
@@ -59,6 +61,7 @@ a{
   box-shadow: inset 0 0 0 0.1rem;
 }
 
+/*style of the navigation buttons in the header*/
 .Header-Buttons{
   color: rgb(240, 240, 240);
   border: none;
@@ -68,10 +71,19 @@ a{
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.7);
   box-shadow: 0px 0.5rem 1.2rem rgba(0, 0, 0, 0.4);
-
 }
-/*Buttons*/
 
+/*footer that contains the members of the project*/
+.footer_container{
+  position: absolute;
+  width: 100%;
+  background-color: rgba(26, 24, 37, 70%);
+  color:rgb(240, 240, 240);
+  bottom: 0px;
+  z-index: -1;
+}
+
+/*style for all Buttons*/
 .Game-Buttons{
   background-color: white;
   color: black;
@@ -112,8 +124,7 @@ a{
 
 /*home menu components*/
 
-/*Game Guide popup on frontpage*/
-
+/*Game Guide popup on frontpage (grayscale overlay)*/
 .Game-Guide .Overlay{
   position: fixed;
   top:0px;
@@ -125,6 +136,7 @@ a{
   display: none;
 }
 
+/*content of the popup*/
 .Game-Guide .Content{
   position: absolute;
   top:50%;
@@ -140,16 +152,18 @@ a{
   box-sizing: border-box;
   transition: 300ms;
 }
+/*the actual text of the game-guide*/
 .Game-Guide-Text{
   font-size: 18px;
   font-weight: 500;
   text-align: start;
 }
+
 .Game-Guide-Text p{
   display: inline-block;
 }
 
-
+/*button to close the game-guide*/
 .Exit-Button{
   cursor: pointer;
   position: absolute;
@@ -170,6 +184,7 @@ a{
   background-color: rgba(0,0,0,0.85);
 }
 
+/*transition and formatting of the game guide when displayed*/
 .Game-Guide.active .Overlay{
   display: block;
 }
@@ -179,6 +194,7 @@ a{
   transform: translate(-50%, -50%) scale(1);
 }
 
+/*Button to trigger the game-guide*/
 #Help-Button{
   position: fixed;
   bottom: 1rem;
@@ -212,11 +228,12 @@ a{
   cursor: text;
   transform: none;
 }
+
 #Name-Input:active{
   background-color: white;
   transform: none;
-  box-shadow: 0rem 0.1rem 0.5rem  rgba(0, 0, 0, 0.4);
 }
+
 #Name-Input:focus{
   box-shadow: inset 0rem 0rem 0rem 0.1rem rgba(136,47,255,1);
 }
@@ -253,7 +270,6 @@ a{
 #Join-Game-Input:active{
   background-color: white;
   transform: none;
-  box-shadow: 0rem 0.1rem 0.5rem  rgba(0, 0, 0, 0.4);
 }
 
 #Join-Game-Input:focus{
@@ -285,7 +301,7 @@ a{
 
 /*Game menu components*/
 
-/*Player-Table*/
+/*Player-Table that displays the name of the the players and there point*/
 
 .Player-Table{
   background-color: rgba(54, 53, 53, 0.6);
@@ -346,9 +362,7 @@ a{
   border: none;
   box-shadow: 0rem 0.1rem 0.5rem  rgba(0, 0, 0, 0.6);
   transition: 300ms;
-
   color: rgba(255,105,18,0.85);
-
   box-shadow:0px 0px 0px 1px rgba(255,105,18,1);
 
 }
@@ -365,17 +379,15 @@ a{
   box-shadow: 0rem 0.1rem 0.5rem  rgba(0, 0, 0, 0.6);
   transition: 300ms;
 }
-/*pointer effect when hovering over the white cards*/
 
+/*pointer effect when hovering over the white cards*/
 #Choose-Card-Button:hover{
   cursor: pointer;
 }
 
 /*effect when selecting a card*/
-
 #Choose-Card-Button:focus{
   color: rgba(255,105,18,0.85);
-
   box-shadow:0px 0px 0px 1px rgba(255,105,18,1);
   animation: animate-shadow-card 300ms;
 }
@@ -387,7 +399,6 @@ a{
 }
 
 /*Answer*/
-
 .Answer-Table li{
   margin-top: 0px;
   margin-left: 0.5rem;
@@ -410,11 +421,10 @@ a{
 #Choose-Answer-Button:hover {
   cursor: pointer;
 }
+
 /* czar select winning answer effect */
 #Choose-Answer-Button:focus{
-
   color: rgba(136,47,255,0.85);
-
   box-shadow:0px 0px 0px 1px rgba(136,47,255,1);
   animation: animate-shadow-answer 300ms;
 }
@@ -423,7 +433,6 @@ a{
   100%{
     box-shadow: 0px 0px 50px 20px rgba(136,47,255,0);
   }
-
 }
 
 /* Winning/Losing Animation */
@@ -435,7 +444,6 @@ a{
 
 
 .Crown{
-
   margin-top: 50px;
   animation: animate-rotation 1s linear;
   animation-iteration-count: infinite;
@@ -452,6 +460,11 @@ a{
 }
 
 /* Card packs menu */
+.Card-Packs-Table {
+  padding: 16px;
+  min-height: 600px;
+  overflow: scroll;
+}
 
 .Card-Packs{
   z-index: 1;
@@ -484,6 +497,7 @@ a{
   background-color: black;
   transform: translatey(-20px);
 }
+
 .Card-Pack{
   display:inline-flex;
   text-align: start;
@@ -506,6 +520,7 @@ a{
   margin-bottom: 10px;
 }
 
+/*3d effect of the card-packs*/
 #Pack-1{
   z-index: -1;
   position: absolute;
@@ -514,6 +529,7 @@ a{
   transform: rotate(2deg);
   background-color: #E1E1E1FF;
 }
+
 #Pack-2{
   z-index: -2;
   position: absolute;
@@ -527,10 +543,50 @@ a{
   cursor: pointer;
 }
 
+/*hiding all scrollbars for Chrome, Safari and Opera*/
+.Black-Card::-webkit-scrollbar {
+  display: none;
+}
+
+.White-Cards-Table::-webkit-scrollbar {
+  display: none;
+}
+
+.Answer-Table::-webkit-scrollbar{
+  display: none;
+}
+
+.Card-Packs-Table::-webkit-scrollbar{
+  display: none;
+}
+
+/* Hide all scrollbars for IE, Edge and Firefox */
+.Black-Card{
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.White-Cards-Table{
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.Answer-Table {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.Card-Packs-Table{
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
 /*responsive elements for smartphone version*/
 
 /*portrait mode*/
 @media screen and (max-width: 400px) and (orientation: portrait){
+
   .Header-Buttons{
     padding: 10px 20px;
     margin-left: 5px;
@@ -540,6 +596,11 @@ a{
     left: 0.5rem;
     top: 1.25rem;
   }
+
+  .Game-Guide .Content{
+    height: 75vh;
+  }
+
   #Stop-Game-Button{
     margin-top: 0.5rem;
   }
@@ -571,7 +632,7 @@ a{
     padding: 16px 24px;
   }
   .Card-Packs-Table{
-    max-height: 800px;
+    max-height: 600px;
     overflow: scroll;
   }
 }
@@ -677,6 +738,8 @@ a{
   }
 }
 
+/*responsive elements for Ipad version*/
+/*portrait mode*/
 @media screen and (min-width: 720px) and (max-width: 950px) and (orientation: portrait){
 
   .White-Cards-Table{
@@ -696,12 +759,12 @@ a{
   }
 
   .Card-Packs-Table{
-    max-height: 400px;
+    max-height: 800px;
     overflow: scroll;
   }
-
 }
 
+/*landscape mode*/
 @media screen and (min-width: 1000px) and (max-width: 1250px) and (orientation: landscape){
 
   .Game-Buttons-Alternate{
@@ -776,11 +839,15 @@ a{
     max-height: 400px;
     overflow: scroll;
   }
-
 }
 
 
-/*
+
+
+
+
+/*hiding all debug buttons*/
+
 #Debug-User-Button{
   display: none;
 }
@@ -796,8 +863,4 @@ a{
 #Delete-Game-Button{
   display: none;
 }
-*/
 
-.Home-Body {
-  min-height: 90vh;
-}
