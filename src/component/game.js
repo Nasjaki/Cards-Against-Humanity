@@ -121,15 +121,17 @@ export default function Game (){
 
     //Answer List
     const[answer_list, set_answer_list] = useState([]);
+    const[id_list, set_id_list] = useState([]);
 
     async function refresh_answer_list() {
 
         let answer_arr = await get_answers();
 
+        let temp_arr = [];
         for(var i = 0; i < answer_arr.length; i++) {
-            answer_arr.id = i;
+            temp_arr[i] = i;
         }
-
+        set_id_list(temp_arr);
 
         set_answer_list(answer_arr);
 
@@ -153,9 +155,7 @@ export default function Game (){
         for(var i = 0; i < cards.length; i++) {
             //dont commit if not valid
             if (cards[i] == -1 || cards.length < selected_allowed || cards[i] == undefined) {
-
                 return false;
-
             } 
 
             answer_array[pos] = white_card[cards[i]].id;
@@ -164,7 +164,6 @@ export default function Game (){
 
         
         if (await commit_answer(answer_array) === true){
-            console.log("ALARM");
 
             //Reset card selected
             set_card_selected([]);
@@ -177,7 +176,6 @@ export default function Game (){
             //disable abillity to commit an answer
             can_commit = false;
         } 
-        console.log("KEIN ALARM");
         
 
     }
@@ -367,7 +365,7 @@ export default function Game (){
         <h2>Game {game_active + " id: " + window.game_id}</h2>
 
 
-        {player_is_owner ? <div>
+        {player_is_owner ? <div className='Game-Buttons-Alternate'>
             {game_active !== "Aktiv" ? <button className='Game-Buttons' id = "Start-Game-Button" onClick={toggleGameHandle}> Start Game </button> :
             <button className='Game-Buttons ' id = "Stop-Game-Button" onClick={toggleGameHandle}> Stop Game </button>}
         </div> : null}
@@ -382,7 +380,7 @@ export default function Game (){
                     {black_card.text}
             </div> : null}
 
-            {isCzar === "Player"  ? <div>
+            {isCzar === "Player"  ? <div className='White-Cards-Map'>
                 <ul className='White-Cards-Table'>
                     {white_card_list.map((card_text, index) => {
                         return (
@@ -400,16 +398,15 @@ export default function Game (){
                 {can_commit ? <button className='Game-Buttons' id = "Commit-Answer-Button" onClick = {commitAnswerHandle}> Commit Answer </button> : null}
             </div> : null}
 
-        </div>
+        
 
-        {isCzar === "Czar" ? <div className='Czar-Table'>
-            <ul className='Answer-Table'>
-                {answer_list.map((white_card) => {
-                    return (
-                        <div>
-                            <li key = {answer_list.id.toString()}>
+            {isCzar === "Czar" ? <div className='Czar-Table'>
+                <ul className='Answer-Table'>
+                    {answer_list.map((white_card, index) => {
+                        return (
+                            <li key = {index.toString()}>
                                 <div className='Card-Parent'>
-                                    <button id = "Choose-Answer-Button" onClick={() => set_answer_selected(answer_list.id) }> 
+                                    <button id = "Choose-Answer-Button" onClick={() => set_answer_selected(index) }> 
                                         <div className='white_answer_card'>
                                             {white_card.map((white_card_text) => {
                                                 return ( <div id = "white_answer_list"> {white_card_text.text} </div>  )
@@ -418,14 +415,15 @@ export default function Game (){
                                     </button>
                                 </div>
                             </li>
-                        </div>
                     )
-                })}
-            </ul> 
+                    })}
+                </ul> 
 
-            <button className='Game-Buttons' id = "Select-Winner-Button" onClick={() => winner_handle()}> Winner </button>
+                <button className='Game-Buttons' id = "Select-Winner-Button" onClick={() => winner_handle()}> Winner </button>
 
-        </div> : null}
+            </div> : null}
+
+        </div>
 
         {winner != "none" ? <div className='Crown-Container'>
             {winner == "winner" ? <svg className='Crown' width="118" height="91" viewBox="0 0 118 91" fill="none" xmlns="http://www.w3.org/2000/svg">

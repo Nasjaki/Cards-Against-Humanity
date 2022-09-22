@@ -33,34 +33,25 @@ a{
   display:flex;
   flex-direction: row;
 }
-.ToggleHeader{
+.ToggleHeader {
   position: absolute;
   width: 25px;
   height: 25px;
   left: 1rem;
   top: 1.5rem;
-  cursor:pointer;
+  cursor: pointer;
   transition: 1s;
-  color: rgb(102, 0, 255);
-  animation: animate 8s linear infinite;
+  color: rgb(19, 2, 45);
 }
-@keyframes animate {
-  0%{
-    filter: contrast(20%);
-  }
-  50%{
-    filter: contrast(80%);
-  }
-  100%{
-    filter: contrast(20%);
-  }
+#IoGrid{
+  transition: 500ms;
 }
-
-.ToggleHeader:hover{
-  transform: rotate(180deg) translateZ(0);
+#IoGrid.true{
+  transform: rotate(-90deg) translateZ(0);
 }
-
-
+#IoGrid.false{
+  transform: rotate(90deg) translateZ(0);
+}
 
 .Header-Buttons:hover{
   color: rgb(240, 240, 240);
@@ -149,6 +140,15 @@ a{
   box-sizing: border-box;
   transition: 300ms;
 }
+.Game-Guide-Text{
+  font-size: 18px;
+  font-weight: 500;
+  text-align: start;
+}
+.Game-Guide-Text p{
+  display: inline-block;
+}
+
 
 .Exit-Button{
   cursor: pointer;
@@ -180,7 +180,7 @@ a{
 }
 
 #Help-Button{
-  position: absolute;
+  position: fixed;
   bottom: 1rem;
   right: 1rem;
   display: block;
@@ -293,13 +293,13 @@ a{
   margin: auto;
   margin-top: 20px;
   width: 20%;
+  text-align: start;
 }
 
 /*Cards*/
 
 .Cards {
   margin-top: 3rem;
-
 }
 
 /*Black Card*/
@@ -453,7 +453,7 @@ a{
 
 /* Card packs menu */
 
-.Card-Packs-Table{
+.Card-Packs{
   z-index: 1;
   margin-top: 0.7rem;
   margin-bottom: 0.7rem;
@@ -484,8 +484,7 @@ a{
   background-color: black;
   transform: translatey(-20px);
 }
-
-.White-Card-Pack{
+.Card-Pack{
   display:inline-flex;
   text-align: start;
   height: 10rem;
@@ -498,17 +497,8 @@ a{
 }
 
 .Black-Card-Pack{
-  display:inline-flex;
-  text-align: start;
-  height: 10rem;
-  width: 7rem;
-  padding: 6px;
   background-color: black;
   color:white;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-  border: none;
-  box-shadow: 0rem 0.1rem 0.5rem rgba(0, 0, 0, 0.6);
 }
 
 #Toggle-Packs-Button{
@@ -539,6 +529,7 @@ a{
 
 /*responsive elements for smartphone version*/
 
+/*portrait mode*/
 @media screen and (max-width: 400px) and (orientation: portrait){
   .Header-Buttons{
     padding: 10px 20px;
@@ -568,19 +559,223 @@ a{
   .White-Cards-Table{
     max-height: 300px;
     overflow: scroll;
+    padding: 16px 24px;
   }
   .Player-Table{
-    width: 50%;
-    overflow: scroll;
+    text-align: start;
+    width: 35%;
   }
   .Answer-Table{
-
+    max-height: 200px;
+    overflow: scroll;
+    padding: 16px 24px;
+  }
+  .Card-Packs-Table{
+    max-height: 800px;
+    overflow: scroll;
   }
 }
 
+/*landscape mode*/
+@media screen and (max-height: 400px) and (orientation: landscape){
 
-/*temporarily turns off unimportant buttons
+  .Button-Block{
+    width: 20%;
+    display: block;
+  }
+  #Create-Game-Button{
+    margin:40px 50px 10px 150px;
+    display: inline-block;
+  }
 
+  #Join-Random-Game-Button{
+    margin:30px 100px 0px 0px;
+    min-width: 210px;
+    display: inline-block;
+  }
+
+  #Join-Game-Button{
+    margin:50px 10px 10px 0px;
+    display: inline-block;
+  }
+
+  #Join-Game-Input{
+    font-weight: 500;
+    padding: 12px 0px;
+    margin:50px 10px 10px 10px;
+    display: inline-block;
+  }
+
+  .Game-Buttons-Alternate{
+    display:inline-flex;
+  }
+
+  #Stop-Game-Button{
+    margin-top: 0.2rem;
+    margin-right: 2rem;
+    display: inline-block;
+  }
+
+  #Start-Game-Button{
+    margin-top: 0.2rem;
+    margin-right: 2rem;
+    display: inline-block;
+  }
+
+  #Leave-Game-Button{
+    margin-top: 0.2rem;
+    display: inline-block;
+  }
+
+  .Cards {
+    margin-top: 0.5rem;
+    display: inline-flex;
+  }
+
+  .Black-Card{
+    margin-left: 2rem;
+    height: 12rem;
+    width: 8rem;
+    overflow: scroll;
+  }
+
+  .White-Cards-Table{
+    max-width: 550px;
+    max-height: 200px;
+    overflow: scroll;
+    padding: 16px 24px;
+    display: inline-block;
+  }
+
+  .Answer-Table{
+    max-height: 200px;
+    overflow: scroll;
+    padding: 16px 24px;
+  }
+
+
+  .Player-Table{
+    text-align: start;
+    position: absolute;
+    left: 4%;
+    top: 120%;
+    width: 25%;
+  }
+
+  #Toggle-Packs-Button{
+    margin-top: 30px;
+  }
+
+  .Card-Packs-Table{
+    max-height: 200px;
+    overflow: scroll;
+  }
+}
+
+@media screen and (min-width: 720px) and (max-width: 950px) and (orientation: portrait){
+
+  .White-Cards-Table{
+    margin-left: 10px;
+    margin-right: 10px;
+    max-height: 500px;
+    overflow: scroll;
+    padding: 16px 24px;
+  }
+
+  .Answer-Table{
+    margin-left: 10px;
+    margin-right: 10px;
+    max-height: 500px;
+    overflow: scroll;
+    padding: 16px 24px;
+  }
+
+  .Card-Packs-Table{
+    max-height: 400px;
+    overflow: scroll;
+  }
+
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1370px) and (orientation: landscape){
+
+  .Game-Buttons-Alternate{
+    display:inline-flex;
+  }
+
+  #Stop-Game-Button{
+    margin-top: 0.2rem;
+    margin-right: 2rem;
+    display: inline-block;
+  }
+
+  #Start-Game-Button{
+    margin-top: 0.2rem;
+    margin-right: 2rem;
+    display: inline-block;
+  }
+
+  #Leave-Game-Button{
+    margin-top: 0.2rem;
+    display: inline-block;
+  }
+
+  #Commit-Answer-Button{
+    margin-top: 0rem;
+    display: block;
+  }
+
+  .Cards{
+    margin-top: 1rem;
+    display: inline-flex;
+  }
+
+  .Black-Card{
+    margin-left: 2rem;
+    min-height: 15rem;
+    min-width: 10rem;
+    overflow: scroll;
+  }
+
+  .White-Cards-Table{
+    margin-left: 10px;
+    margin-right: 10px;
+    max-width: 700px;
+    max-height: 400px;
+    overflow: scroll;
+    padding: 16px 24px;
+    display: inline-block;
+  }
+
+  .Answer-Table{
+    margin-left: 10px;
+    margin-right: 10px;
+    max-height: 400px;
+    overflow: scroll;
+    padding: 16px 24px;
+  }
+
+  .Player-Table{
+    text-align: start;
+    position: absolute;
+    left: 3%;
+    bottom:20%;
+    width: 20%;
+  }
+
+  .Card-Packs-Table{
+    max-height: 400px;
+    overflow: scroll;
+  }
+
+}
+
+
+
+
+
+
+/*
 #Debug-User-Button{
   display: none;
 }
@@ -596,5 +791,13 @@ a{
 #Delete-Game-Button{
   display: none;
 }
-
 */
+
+
+.footer_container{
+  display: flex;
+  justify-content: center;
+  background-color: rgba(26, 24, 37, 70%);
+  color:rgb(240, 240, 240);
+  bottom: 0;
+}

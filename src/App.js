@@ -43,9 +43,8 @@ function App() {
       document.getElementById("IoGrid").classList.add(false);
     }
 
-    if (window.game_id == -1) {
-      setToggle(!toggle);
-    }
+    setToggle(!toggle);
+    
 
   }
 

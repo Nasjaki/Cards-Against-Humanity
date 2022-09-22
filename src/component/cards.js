@@ -52,10 +52,10 @@ export default function Cards (){
 
         <button className='Game-Buttons Button-Block' id="Toggle-Packs-Button" onClick={() => show_packs_handle()}> Packs </button>
 
-        {toggle_show_packs == "Packs" ? <div>
+        {toggle_show_packs == "Packs" ? <div className='Card-Packs-Table'>
             {packs.map((pack) => {
                 return (
-                    <div className='Card-Packs-Table'>
+                    <div className='Card-Packs'>
                         <li key = {pack.id.toString()}>
                         <button className='Card-Packs-Button' onClick={() => white_black_cards_handle(pack.id)}> {pack.name} </button>
                             <button className='Card-Packs-Button ' id='Pack-1'></button>
@@ -65,13 +65,13 @@ export default function Cards (){
                 )
             })}
         </div> : null}
-        
+
         {toggle_show_packs == "Cards" ? <div>
             {black_cards.map((black_card) => {
                 return (
-                    <div className='Card-Packs-Table'>
+                    <div className='Card-Packs'>
                         <li key = {black_card.id}>
-                            <button className='Black-Card-Pack'> {black_card.text} </button>
+                            <button className='Black-Card-Pack Card-Pack'> {black_card.text} </button>
                         </li>
                     </div>
                 )
@@ -79,9 +79,9 @@ export default function Cards (){
 
             {white_cards.map((white_card) => {
                 return (
-                    <div className='Card-Packs-Table'>
+                    <div className='Card-Packs'>
                         <li key = {white_card.id}>
-                            <button className='White-Card-Pack'> {white_card.text} </button>
+                            <button className='White-Card-Pack Card-Pack'> {white_card.text} </button>
                         </li>
                     </div>
                 )
