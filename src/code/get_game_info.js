@@ -5,6 +5,8 @@ const url = "https://gruppe5.toni-barth.com/";
                                         //With the type of the information
 export default async function get_game_info(type, game_id = window.game_id) {
 
+    if (game_id == -1) return false;
+
     //Fetch request for the game data
     return await fetch(url + "games/" + game_id, {    
         method: 'GET',

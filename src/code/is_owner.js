@@ -4,8 +4,8 @@ import get_games from "./get_games";
                                         //By default the local player
 export default async function is_owner(player_id = window.player_id) {
 
-    //Check if logged in
-    if (player_id !== -1) {
+    //Check if logged in and game_active
+    if (player_id !== -1 && window.game_id !== -1) {
                         //Return the game_stats
         const game_stat = await get_games(window.game_id);
 

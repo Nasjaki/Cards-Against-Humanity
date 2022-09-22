@@ -205,40 +205,41 @@ export default function Game (){
 
                 let currInfo = await get_game_info("General");
 
+                if (currInfo !== false) {
+                    //new black card -> new round
+                    if (black_card.text !== currInfo.currentBlackCard.text) {
+                        //Current Black Card 
+                        black_card = currInfo.currentBlackCard;
+                        can_commit = true;
+                    } 
+                    
 
-                //new black card -> new round
-                if (black_card.text !== currInfo.currentBlackCard.text) {
-                    //Current Black Card 
-                    black_card = currInfo.currentBlackCard;
-                    can_commit = true;
+                    //Game Loop as czar or as player
+                    let czar = currInfo.czar;
+                    if (czar.id === window.player_id) {
+                        setIsCzar("Czar");
+                        
+                        //all 4 secs
+                        if (count % 2 == 0 && answer_list.length == 0) await refresh_answer_list();
+
+
+                    } else {
+                        setIsCzar("Player");
+
+                        
+                        //set white cards array
+                        if (count % 2 == 0) await refresh_white_cards();
+                        
+                        //get how many cards can be selected
+                        selected_allowed = await get_game_info("BlackCard");
+                        selected_allowed = selected_allowed.pick;
+                        
+                    }
+
+                    //Refresh score
+                    refresh_score(currInfo.points);
+
                 } 
-                
-
-                //Game Loop as czar or as player
-                let czar = currInfo.czar;
-                if (czar.id === window.player_id) {
-                    setIsCzar("Czar");
-                    
-                    //all 4 secs
-                    if (count % 2 == 0 && answer_list.length == 0) await refresh_answer_list();
-
-
-                } else {
-                    setIsCzar("Player");
-
-                    
-                    //set white cards array
-                    if (count % 2 == 0) await refresh_white_cards();
-                    
-                    //get how many cards can be selected
-                    selected_allowed = await get_game_info("BlackCard");
-                    selected_allowed = selected_allowed.pick;
-                    
-                }
-
-
-                //Refresh score
-                refresh_score(currInfo.points);
 
             } else {
                 //Display not active
