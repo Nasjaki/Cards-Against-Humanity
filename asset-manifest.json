@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/Cards-Against-Humanity/static/css/main.b0b85bd4.css",
-    "main.js": "/Cards-Against-Humanity/static/js/main.8cc6fe88.js",
+    "main.css": "/Cards-Against-Humanity/static/css/main.5d22b7ca.css",
+    "main.js": "/Cards-Against-Humanity/static/js/main.7c6c7105.js",
     "static/js/787.e8b8a71f.chunk.js": "/Cards-Against-Humanity/static/js/787.e8b8a71f.chunk.js",
     "index.html": "/Cards-Against-Humanity/index.html",
-    "main.b0b85bd4.css.map": "/Cards-Against-Humanity/static/css/main.b0b85bd4.css.map",
-    "main.8cc6fe88.js.map": "/Cards-Against-Humanity/static/js/main.8cc6fe88.js.map",
+    "main.5d22b7ca.css.map": "/Cards-Against-Humanity/static/css/main.5d22b7ca.css.map",
+    "main.7c6c7105.js.map": "/Cards-Against-Humanity/static/js/main.7c6c7105.js.map",
     "787.e8b8a71f.chunk.js.map": "/Cards-Against-Humanity/static/js/787.e8b8a71f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b0b85bd4.css",
-    "static/js/main.8cc6fe88.js"
+    "static/css/main.5d22b7ca.css",
+    "static/js/main.7c6c7105.js"
   ]
 }
