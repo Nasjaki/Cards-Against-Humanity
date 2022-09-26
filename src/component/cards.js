@@ -56,7 +56,7 @@ export default function Cards (){
             {packs.map((pack, index) => {
                 return (
                     <div className='Card-Packs'>
-                        <li key = {index.toString()}>
+                        <li key = {index}>
                         <button className='Card-Packs-Button' onClick={() => white_black_cards_handle(pack.id)}> {pack.name} </button>
                             <button className='Card-Packs-Button ' id='Pack-1'></button>
                             <button className='Card-Packs-Button' id='Pack-2'></button>
@@ -70,7 +70,7 @@ export default function Cards (){
             {black_cards.map((black_card, index) => {
                 return (
                     <div className='Card-Packs'>
-                        <li key = {index.toString()}>
+                        <li key = {index}>
                             <button className='Black-Card-Pack Card-Pack'> {black_card.text} </button>
                         </li>
                     </div>
@@ -80,7 +80,7 @@ export default function Cards (){
             {white_cards.map((white_card, index) => {
                 return (
                     <div className='Card-Packs'>
-                        <li key = {index.toString()}>
+                        <li key = {index}>
                             <button className='White-Card-Pack Card-Pack'> {white_card.text} </button>
                         </li>
                     </div>

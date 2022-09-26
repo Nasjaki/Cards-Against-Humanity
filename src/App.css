@@ -157,6 +157,8 @@ a{
   font-size: 18px;
   font-weight: 500;
   text-align: start;
+  max-height: 85%;
+  overflow: scroll;
 }
 
 .Game-Guide-Text p{
@@ -328,6 +330,7 @@ a{
   margin-bottom: 1rem;
   border-radius: 8px;
   border: none;
+  word-break: break-word;
   color: white;
   background-color: black;
   box-shadow: 0rem 0.1rem 0.5rem  rgba(0, 0, 0, 0.6);
@@ -360,6 +363,7 @@ a{
   margin-bottom: 1rem;
   border-radius: 8px;
   border: none;
+  word-break: break-word;
   box-shadow: 0rem 0.1rem 0.5rem  rgba(0, 0, 0, 0.6);
   transition: 300ms;
   color: rgba(255,105,18,0.85);
@@ -474,6 +478,7 @@ a{
   margin-right: 0.5rem;
   display: inline-flex;
   position: relative;
+  word-break: break-word
 }
 
 .Card-Packs-Button{
@@ -544,6 +549,10 @@ a{
 }
 
 /*hiding all scrollbars for Chrome, Safari and Opera*/
+.Game-Guide-Text::-webkit-scrollbar {
+  display: none;
+}
+
 .Black-Card::-webkit-scrollbar {
   display: none;
 }
@@ -561,6 +570,11 @@ a{
 }
 
 /* Hide all scrollbars for IE, Edge and Firefox */
+.Game-Guide-Text{
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 .Black-Card{
   -ms-overflow-style: none;
   scrollbar-width: none;
