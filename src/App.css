@@ -520,6 +520,12 @@ a{
   color:white;
 }
 
+.Card-Packs-Text{
+  word-break: break-word;
+  max-height: 90%;
+  overflow: scroll;
+}
+
 #Toggle-Packs-Button{
   margin-top: 50px;
   margin-bottom: 10px;
@@ -549,6 +555,10 @@ a{
 }
 
 /*hiding all scrollbars for Chrome, Safari and Opera*/
+.Card-Packs-Text::-webkit-scrollbar{
+  display: none;
+}
+
 .Game-Guide-Text::-webkit-scrollbar {
   display: none;
 }
@@ -570,6 +580,11 @@ a{
 }
 
 /* Hide all scrollbars for IE, Edge and Firefox */
+.Card-Packs-Text{
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 .Game-Guide-Text{
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -856,25 +871,4 @@ a{
 }
 
 
-
-
-
-
-/*hiding all debug buttons*/
-
-#Debug-User-Button{
-  display: none;
-}
-
-#Delete-User-Button{
-  display: none;
-}
-
-#Debug-Games-Button{
-  display: none;
-}
-
-#Delete-Game-Button{
-  display: none;
-}
 

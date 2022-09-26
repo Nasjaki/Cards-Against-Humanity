@@ -9,16 +9,8 @@ import {
     BrowserRouter as Router,
     Link,
     useNavigate
-  } from 'react-router-dom';
+} from 'react-router-dom';
   
-
-//Devtools
-async function debugPlayers() {
-    console.log(await get_players());
-}
-async function deletePlayers() {
-    await delete_player();    
-}
 
 
 export default function Login () {
@@ -48,9 +40,6 @@ export default function Login () {
             
             <button className='Game-Buttons Button-Block' id = "Create-User-Button" onClick={newPlayerHandle}> {(player_name === "") ? "Create User" : player_name} </button> 
             
-                 
-            <button id = "Debug-User-Button" onClick={debugPlayers}> Debug Players </button>
-            <button id = "Delete-User-Button" onClick={deletePlayers}> Delete Players </button>
 
     </div>
 }

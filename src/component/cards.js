@@ -71,7 +71,11 @@ export default function Cards (){
                 return (
                     <div className='Card-Packs'>
                         <li key = {index}>
-                            <button className='Black-Card-Pack Card-Pack'> {black_card.text} </button>
+                            <button className='Black-Card-Pack Card-Pack'> {
+                                <div className='Card-Packs-Text'>
+                                    {black_card.text}
+                                </div>} 
+                            </button>
                         </li>
                     </div>
                 )
@@ -81,7 +85,11 @@ export default function Cards (){
                 return (
                     <div className='Card-Packs'>
                         <li key = {index}>
-                            <button className='White-Card-Pack Card-Pack'> {white_card.text} </button>
+                            <button className='White-Card-Pack Card-Pack'> {
+                                <div className='Card-Packs-Text'>
+                                    {white_card.text}
+                                </div>} 
+                            </button>
                         </li>
                     </div>
                 )

@@ -8,14 +8,7 @@ import game_join from '../code/game_join';
 import { useNavigate } from "react-router-dom";
 import get_game_waiting from '../code/get_game_waiting';
 
- //Developer
-async function debugGamesHandle() {
-   let gameInfo = await get_games();
-   console.log(gameInfo);
-}
-async function deleteGameHandle() {
-   await delete_game();
-}
+
 
 
 export default function Play (){
@@ -84,8 +77,6 @@ export default function Play (){
     
     <input className='Game-Buttons Button-Block' id = "Join-Game-Input" placeholder='Game ID'></input>
 
-    <button id = "Debug-Games-Button" onClick={debugGamesHandle}> Debug Games </button>
-    <button id = "Delete-Game-Button" onClick={deleteGameHandle}> Delete Game </button>
 
  </div>
  
