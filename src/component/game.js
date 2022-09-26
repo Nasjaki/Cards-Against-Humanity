@@ -22,36 +22,27 @@ import { useNavigate } from "react-router-dom";
 
 
 
+//Initializing
 
-
-let black_card = "";
-let card_count = 10;
-let white_card = [];
-for(var i = 0; i < card_count; i++) {
-    white_card[i] = "";
-}
-
-let score_arr = [];
-let card_selected = [];
-let selected_allowed = 0;
-
-let can_commit = true;
-
+let black_card = ""; 
+let score_arr = []; 
+let selected_allowed = 0; 
+let can_commit = true; 
 let player_is_owner = false;
 
 
 export default function Game (){
 
-
     //Spiel Aktiv
     const [game_active, setGameActive] = useState("");
     async function toggleGameHandle() {
         if (game_active !== "Aktiv") {
-            let started = await game_start();
+            await game_start();
         } else {
-            let stopped = await game_stop();
+            await game_stop();
         }
     }
+
     //is Czar
     const [isCzar, setIsCzar] = useState("");
 
@@ -77,8 +68,8 @@ export default function Game (){
     //Selected white cards 
     const[card_selected, set_card_selected] = useState([-1]);
 
+    //return if the card with index is selected
     function card_selected_handle(index) {
-
         for(var i = 0; i < card_selected.length; i++) {
             if (card_selected[i] == index) {
                 return i + 1;
@@ -88,6 +79,8 @@ export default function Game (){
         return -1;
         
     }
+
+    //Set a new selected card to the array
     function set_card_selected_handle(index) {
 
         //if index not already in array continue 
@@ -98,36 +91,29 @@ export default function Game (){
         
 
         let array_modify = card_selected;
-
-
         let pos = 0;
+        //decrement every element index
         for(var i = 0; i < selected_allowed - 1; i++) {
-            
             array_modify[i] = array_modify[i+1];
             pos++;
-            
         }
         
-
         //The last one is the new one
         array_modify[pos] = index;
 
-
-        set_card_selected(array_modify);
-
-        
+        set_card_selected(array_modify); 
     }
 
 
     //Answer List
     const[answer_list, set_answer_list] = useState([]);
 
+    //update answer list
     async function refresh_answer_list() {
-
         let answer_arr = await get_answers();
 
         let compiled_answer = [];
-
+        //Set up the answers as a string
         for(var i = 0; i < answer_arr.length; i++) {
             let answer_str = "";
   
@@ -138,27 +124,27 @@ export default function Game (){
 
         }
 
+        //return as combined string
         set_answer_list(compiled_answer);
 
     }
 
     //Refresh the score
     async function refresh_score(points) {
-
+        //like this for consistency
         score_arr = points;
     }
 
     //Commit answer
     async function commitAnswerHandle() {
         let cards = card_selected;
+        //reset cards selected
         set_card_selected([]);
 
         let answer_array = [];
         let pos = 0;
-
-
         for(var i = 0; i < cards.length; i++) {
-            //#nofilter
+            //transfer the ids to the commit array
             answer_array[pos] = white_card_list[cards[i]].id;
             pos++;
         }
@@ -176,7 +162,7 @@ export default function Game (){
 
     }
 
-    //mount
+    //on mount
     useEffect(() => {
         setTimeout(async () => {
             player_is_owner = await is_owner();
@@ -248,11 +234,8 @@ export default function Game (){
                 setIsCzar("");
                 black_card = "";
 
-                
-
-                
+                //Show or hide winner or loser animation
                 let winner_stats = game_stats.winner;
-                
                 if(winner_stats != undefined) {
                     let winner_id = winner_stats.id;
                     if (winner_id !== -1) {
@@ -263,10 +246,11 @@ export default function Game (){
                     }
                 }
 
+                //Reset score
                 score_arr = [];
 
 
-                //all 4 secs
+                //all 4 secs refresh player list
                 if (count % 2 == 0) await refresh_player_list(game_stats.players);
 
             }
@@ -278,10 +262,12 @@ export default function Game (){
 
     async function refresh_player_list(player_arr) {
 
+        //Error prevention
         if (player_arr == undefined || player_list == undefined) return false;
 
+        //only update if necessary
         if (player_arr.length !== player_list.length) {
-
+            //add or delete elements from list
             for(var i = 0; i < player_arr.length; i++) {
                 set_list_element(i, player_arr[i].name + "_" + player_arr[i].id);
             }
@@ -290,6 +276,7 @@ export default function Game (){
 
     }
 
+    //Leave game with game_leave to close the game
     let navigate = useNavigate();
     async function leaveGameHandle() {
         let left = await game_leave();
@@ -306,11 +293,10 @@ export default function Game (){
     //white cards 
     const[white_card_list, set_white_card_list] = useState([]);
     
+    //update white cards
     async function refresh_white_cards() {
         const white_card_arr = await get_white_cards();
-
         set_white_card_list(white_card_arr);
-
     }
 
     
@@ -318,15 +304,17 @@ export default function Game (){
     //Winner
     async function winner_handle() {
 
+        //get the answer ids
         let answers_test = await get_answers();
 
-        
         let winner_arr = answers_test[answer_selected];
         let id_arr = [];
+        //check who is the winner by comparing the answer ids
         for(var i = 0; i < winner_arr.length; i++) {
             id_arr[i] = winner_arr[i].id;
         }
 
+        //return the winner id
         if (await put_winner(id_arr)){
             //Reset answer selected
             set_answer_selected(-1);

@@ -8,37 +8,37 @@ import game_join from '../code/game_join';
 import { useNavigate } from "react-router-dom";
 import get_game_waiting from '../code/get_game_waiting';
 
- 
+ //Developer
 async function debugGamesHandle() {
    let gameInfo = await get_games();
    console.log(gameInfo);
 }
 async function deleteGameHandle() {
-
    await delete_game();
 }
-
 
 
 export default function Play (){
    let navigate = useNavigate();
 
+   //create a new game
    async function createGameHandle() {
       let running = await create_game();
 
+      //if not logged in return to login
       if (running == true) {
          navigate("/game");
       } else {
          navigate("/login");
       }
-
-      
    } 
+   //join a game
    async function joinGameHandle() {
       let input = document.getElementById("Join-Game-Input").value;
       if (input !== "") {
          let joined = await game_join(input);
 
+         //Switch what could happen
          switch(joined) {
             case("Game"):
                navigate("/game");
@@ -53,6 +53,7 @@ export default function Play (){
       }
    } 
 
+   //Same as join game but with random game_id
    async function joinRandomGameHandle() {
       let not_active_game_id = await get_game_waiting();
 

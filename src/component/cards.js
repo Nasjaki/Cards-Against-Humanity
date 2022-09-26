@@ -17,7 +17,9 @@ export default function Cards (){
 
     const[toggle_show_packs, set_toggle_show_packs] = useState("None");
 
+    //show or hide packs or return to packs
     async function show_packs_handle() {
+
         if (toggle_show_packs == "Packs") {
             set_toggle_show_packs("None");
         } else {
@@ -31,7 +33,7 @@ export default function Cards (){
     }
 
     
-
+    //load white and black cards on demand
     async function white_black_cards_handle(pack_id) {
         set_toggle_show_packs("Cards");
 
@@ -40,8 +42,6 @@ export default function Cards (){
 
         set_white_cards(white_arr);
         set_black_cards(black_arr);
-
-        
 
     }
 

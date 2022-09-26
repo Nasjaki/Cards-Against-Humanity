@@ -12,7 +12,7 @@ import {
   } from 'react-router-dom';
   
 
-
+//Devtools
 async function debugPlayers() {
     console.log(await get_players());
 }
@@ -20,18 +20,21 @@ async function deletePlayers() {
     await delete_player();    
 }
 
+
 export default function Login () {
     const navigate = useNavigate();
-
     const[player_name, set_player_name] = useState("");
 
+    //Add new player
     async function newPlayerHandle() {
         let name_str = document.getElementById("Name-Input").value;
+        //Name has to be longe than 2 characters
         if (name_str.length > 2) {
             await create_player(name_str);  
             set_player_name(name_str);
+            //Reset name field
             document.getElementById("Name-Input").value = "";
-
+            //navigate to play section
             navigate("/Play");
         }
 
